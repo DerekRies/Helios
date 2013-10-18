@@ -1,0 +1,44 @@
+application: gcdc2013-helios
+version: dev
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?tests$
+- ^(.*/)?test$
+- ^test/(.*/)?
+- ^COPYING.LESSER
+- ^README\..*
+- \.gitignore
+- ^\.git/.*
+- \.*\.lint$
+- ^fabfile\.py
+- ^testrunner\.py
+- ^Gruntfile\.js
+- ^node_modules/(.*/)?
+- ^(.*)\.scss$
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /api/(.*)
+# - url: .*
+  script: kepler.api.app
+
+- url: .*
+  static_files: index.html
+  upload: index.html
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
