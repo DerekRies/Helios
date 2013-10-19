@@ -17,5 +17,6 @@ Helios is a rich web app using WebGL and Angularjs. While it is hosted on Google
 
 You will need to set up the development environment first and foremost. This guide assumes you have already installed
  - Ruby, Python, Node
- - Google App Engine Python SDK
  - Yeoman, Grunt, Bower
+ - Google App Engine Python SDK
+ - VirtualEnv (VirtualEnvWrapper preferred) Pip
