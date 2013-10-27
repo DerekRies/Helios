@@ -3,14 +3,14 @@
 </div><!-- END: Stage -->
 
 <!-- Nav Bar -->
-<div id="block" ng-class="menuCtrl">
+<div id="block" ng-class="menuState" ng-init="menuState='closed'">
     <header id="controls">
         <div class="location block">
             <p><strong>MILKY WAY /</strong> THE SUN / PLANET</p>
         </div>
         <nav class="actions">
-            <button class="menu button active" ng-click="menuCtrl='active'">X</button>
-            <button class="search button">O</button>
+            <button class="menu button active" ng-click="toggleMenu()">X</button>
+            <button class="search button">Os</button>
         </nav>
         <div class="data block">
             <small>mass: 1.18sol</small>
