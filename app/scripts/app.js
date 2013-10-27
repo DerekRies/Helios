@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('HeliosApp', [])
+angular.module('HeliosApp', [
+  'ngRoute',
+  'ngAnimate'
+  ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
