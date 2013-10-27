@@ -7,3 +7,5 @@ app/bower_components
 kepler/confirmed.json
 kepler/total.json
 requests/*
+img/
+
