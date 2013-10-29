@@ -23,15 +23,16 @@ html{
 .open{
 	bottom: -60px;
 }
-.closed{
-	bottom: -100%;
-}
+// .closed{
+// 	bottom: -100%;
+// }
 
 //Control Block
 #block{
 	width: 100%;
 	height: 100%;
 	position: absolute;
+	bottom: -100%;
 	left: 0;
 	padding-bottom: 62px; //50% for fully open
 	z-index: 3;
