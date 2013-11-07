@@ -18,8 +18,8 @@
             <input ng-show="menuState" class="menu-search" type="text" placeholder="Search..." ng-model="query" debounce-model-update="300ms">
         </div>
     </header>
-    <section id="bottom">
-        <div class="system" ng-repeat="system in systems | orderBy: 'num_planets': true | filter:query | limitTo: 10 ">
+    <section id="bottom" class="systemsBlock" ng-show="menuState">
+        <div class="system" style="transition-delay: {{ $index * 50 }}ms" ng-repeat="system in systems | orderBy: 'num_planets': true | filter:query | limitTo: 10">
             <div class="render {{system.styleClassName}}">
                 {{ system.num_planets }}
             </div>
