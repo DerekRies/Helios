@@ -15,13 +15,13 @@
         </nav>
         <div class="data block">
             <small ng-hide="menuState">mass: 1.18sol</small>
-            <input ng-show="menuState" class="menu-search" type="text" placeholder="Search..." ng-model="query" debounce-model-update="300ms">
+            <input ng-show="menuState" class="menu-search" type="text" placeholder="Search..." ng-model="query">
         </div>
     </header>
     <section id="bottom">
-        <div class="system" ng-repeat="system in systems | filter:query">
+        <div class="system" ng-repeat="system in systems | orderBy: 'num_planets': true | limitTo: 10 | filter:query">
             <div class="render">
-
+                {{ system.num_planets }}
             </div>
             <span>{{ system.name }}</span>
         </div>
