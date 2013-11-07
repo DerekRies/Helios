@@ -3,19 +3,23 @@
 </div><!-- END: Stage -->
 
 <!-- Nav Bar -->
-<div id="block" ng-class="(!menuState) ? 'closed' : 'open'">
+<div id="block" ng-class="{'open': menuState}">
     <header id="controls">
         <div class="location block">
-            <p><strong>MILKY WAY /</strong> THE SUN / PLANETS</p>
+            <p ng-hide="menuState"><strong>MILKY WAY /</strong> THE SUN / PLANETS</p>
+            <p ng-show="menuState">Filter shit go here</p>
         </div>
         <nav class="actions">
-            <button class="menu button active" ng-click="toggleMenu()">X</button>
+            <button ng-class="{'menu-exit': menuState}" class="menu button active" ng-click="toggleMenu()">X</button>
             <button class="search button">Os</button>
         </nav>
         <div class="data block">
-            <small>mass: 1.18sol</small>
+            <small ng-hide="menuState">mass: 1.18sol</small>
+            <input ng-show="menuState" class="menu-search" type="text" placeholder="Search...">
         </div>
     </header>
     <section id="bottom">
+        <div class="col" ng-repeat="i in columns">
+        </div>
     </div>
 </div><!-- END: Nav Bar -->
