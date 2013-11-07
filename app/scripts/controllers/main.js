@@ -1,22 +1,23 @@
 'use strict';
 
 angular.module('HeliosApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl',
+           ['$scope', '$log', 'Kepler',
+   function ($scope,   $log,   Kepler) {
+
+    $scope.columns = _.range(10);
 
     $scope.toggleMenu = function () {
       $scope.menuState = !$scope.menuState;
     };
 
-    $scope.makeArray = function (x) {
-      console.log(x);
-      var arr = [];
-      for(var i = 0; i <= x; i++) {
-        arr.push(i);
-      }
-      console.log(arr);
-      return arr;
-    };
+    Kepler.getSystems()
+      .success(function (data) {
+        console.log(data);
+      })
+      .error(function (data) {
 
-    $scope.columns = $scope.makeArray(19);
+      });
 
-  });
+
+  }]);

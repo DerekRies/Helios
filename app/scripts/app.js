@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('HeliosApp', [
-  'ngRoute',
-  'ngAnimate'
+    'ngRoute',
+    'ngAnimate'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $logProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -13,4 +13,6 @@ angular.module('HeliosApp', [
       .otherwise({
         redirectTo: '/'
       });
+
+    $logProvider.debugEnabled(true);
   });
