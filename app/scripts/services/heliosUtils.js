@@ -17,6 +17,35 @@ angular.module('HeliosApp')
           timeInMs = parseInt(timeExpression, 10);
         }
         return timeInMs;
+      },
+
+      inRange: function (rangeMin, rangeMax, needle) {
+        if(typeof rangeMax === 'undefined') {
+          return needle >= rangeMin;
+        }
+        else if(typeof rangeMin === 'undefined') {
+          return needle <= rangeMax;
+        }
+        else {
+          return (needle >= rangeMin && needle <= rangeMax);
+        }
+      },
+
+      mapTemperatureToClassName: function (temp) {
+        // a function used to map temperatures to star sprite class names
+        if(this.inRange(undefined, 5000, temp)){
+          return 'red-star';
+        }
+        else if(this.inRange(5001, 6500, temp)){
+          return 'yellow-star';
+        }
+        else if(this.inRange(6501, 10000, temp)){
+          return 'white-star';
+        }
+        else if(this.inRange(10001, undefined, temp)){
+          return 'blue-star';
+        }
       }
+
     };
   });
