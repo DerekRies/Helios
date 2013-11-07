@@ -19,7 +19,7 @@
         </div>
     </header>
     <section id="bottom">
-        <div class="system" ng-repeat="system in systems | orderBy: 'num_planets': true | limitTo: 10 | filter:query">
+        <div class="system" ng-repeat="system in systems | orderBy: 'num_planets': true | filter:query | limitTo: 10 ">
             <div class="render">
                 {{ system.num_planets }}
             </div>
