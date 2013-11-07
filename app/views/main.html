@@ -15,11 +15,11 @@
         </nav>
         <div class="data block">
             <small ng-hide="menuState">mass: 1.18sol</small>
-            <input ng-show="menuState" class="menu-search" type="text" placeholder="Search..." ng-model="query">
+            <input ng-show="menuState" class="menu-search" type="text" placeholder="Search..." ng-model="query" debounce-model-update="300ms">
         </div>
     </header>
     <section id="bottom">
-        <div class="system" ng-repeat="system in systems | limitTo: 10 | filter:query">
+        <div class="system" ng-repeat="system in systems | filter:query">
             <div class="render">
 
             </div>
