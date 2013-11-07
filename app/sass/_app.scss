@@ -211,15 +211,16 @@ html{
 			margin: 40px 0 0 40px;
 			float: left;
 			.render{
-				width: 199px;
-				height: 199px;
+				width: 183px;
+				height: 183px;
 				margin: 0 auto;
 			}
 
-			.white-star { background: url('../img/stars.png') no-repeat  -11px   -1px;   }
-			.yellow-star{ background: url('../img/stars.png') no-repeat  -231px  -1px;   }
-			.blue-star  { background: url('../img/stars.png') no-repeat  -11px   -201px; }
-			.red-star   { background: url('../img/stars.png') no-repeat  -231px  -201px; }
+			.white-star { background: url('../img/stars.png') no-repeat  -19px   -11px;  }
+			.yellow-star{ background: url('../img/stars.png') no-repeat  -239px  -13px;  }
+			.blue-star  { background: url('../img/stars.png') no-repeat  -19px   -213px; }
+			.orange-star{ background: url('../img/stars.png') no-repeat  -239px  -211px; }
+			.red-star   { background: url('../img/stars.png') no-repeat  -19px   -411px; }
 
 			span{
 				display: block;
