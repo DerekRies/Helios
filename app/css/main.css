@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,200italic,300italic,400italic,700italic);
 /*
 #   Space App Styling
 #   Author: Nick Ruiz, Ulysses Jimenez, Derek Reis
@@ -493,19 +493,15 @@ html {
 
 /* line 23, ../sass/_app.scss */
 .open {
-  bottom: -60px;
+  bottom: -60px!important;
 }
 
-/* line 26, ../sass/_app.scss */
-.closed {
-  bottom: -100%;
-}
-
-/* line 31, ../sass/_app.scss */
+/* line 28, ../sass/_app.scss */
 #block {
   width: 100%;
   height: 100%;
   position: absolute;
+  bottom: -100%;
   left: 0;
   padding-bottom: 62px;
   z-index: 3;
@@ -515,14 +511,14 @@ html {
   -o-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
   transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
 }
-/* line 47, ../sass/_app.scss */
+/* line 45, ../sass/_app.scss */
 #block #controls {
   width: 100%;
   height: 60px;
   position: relative;
   border-top: 1px solid black;
 }
-/* line 52, ../sass/_app.scss */
+/* line 50, ../sass/_app.scss */
 #block #controls:before {
   content: '';
   width: 100%;
@@ -534,7 +530,7 @@ html {
   opacity: .1;
   z-index: 2;
 }
-/* line 64, ../sass/_app.scss */
+/* line 62, ../sass/_app.scss */
 #block #controls .block {
   width: 40%;
   height: 60px;
@@ -547,7 +543,7 @@ html {
   border-bottom: 1px solid black;
   background: url("../img/gradient-black.png") repeat-x bottom left;
 }
-/* line 75, ../sass/_app.scss */
+/* line 73, ../sass/_app.scss */
 #block #controls .block:before {
   content: '';
   width: 100%;
@@ -559,7 +555,7 @@ html {
   opacity: .1;
   z-index: 3;
 }
-/* line 88, ../sass/_app.scss */
+/* line 86, ../sass/_app.scss */
 #block #controls .location p {
   margin: 0;
   padding: 0;
@@ -568,21 +564,21 @@ html {
   font-weight: 100;
   font-style: italic;
 }
-/* line 97, ../sass/_app.scss */
+/* line 95, ../sass/_app.scss */
 #block #controls .actions {
   width: 9.9%;
   height: 61px;
   float: left;
   position: relative;
 }
-/* line 103, ../sass/_app.scss */
+/* line 101, ../sass/_app.scss */
 #block #controls .actions:before, #block #controls .actions:after {
   content: '';
   width: 100%;
   position: absolute;
   z-index: 3;
 }
-/* line 109, ../sass/_app.scss */
+/* line 107, ../sass/_app.scss */
 #block #controls .actions:before {
   height: 100%;
   top: 1px;
@@ -590,14 +586,14 @@ html {
   border-left: 1px solid white;
   opacity: .1;
 }
-/* line 116, ../sass/_app.scss */
+/* line 114, ../sass/_app.scss */
 #block #controls .actions:after {
   height: 98%;
   top: 0;
   left: -1px;
   border-left: 1px solid black;
 }
-/* line 123, ../sass/_app.scss */
+/* line 121, ../sass/_app.scss */
 #block #controls .actions .button {
   width: 50%;
   height: 100%;
@@ -610,11 +606,11 @@ html {
   -moz-border-radius: 0;
   border-radius: 0;
 }
-/* line 135, ../sass/_app.scss */
+/* line 133, ../sass/_app.scss */
 #block #controls .actions .button:focus {
   outline: none;
 }
-/* line 139, ../sass/_app.scss */
+/* line 137, ../sass/_app.scss */
 #block #controls .actions .button:before, #block #controls .actions .button:after {
   content: '';
   width: 100%;
@@ -622,7 +618,7 @@ html {
   position: absolute;
   z-index: 4;
 }
-/* line 146, ../sass/_app.scss */
+/* line 144, ../sass/_app.scss */
 #block #controls .actions .button:before {
   top: 1px;
   left: -1px;
@@ -630,7 +626,7 @@ html {
   border-right: 1px solid white;
   opacity: .1;
 }
-/* line 153, ../sass/_app.scss */
+/* line 151, ../sass/_app.scss */
 #block #controls .actions .button:after {
   top: 0;
   left: 0;
@@ -638,29 +634,67 @@ html {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
 }
-/* line 161, ../sass/_app.scss */
+/* line 159, ../sass/_app.scss */
 #block #controls .actions .active {
   border-bottom: none;
 }
-/* line 163, ../sass/_app.scss */
+/* line 161, ../sass/_app.scss */
 #block #controls .actions .active:before {
   border-bottom: none;
 }
-/* line 166, ../sass/_app.scss */
+/* line 164, ../sass/_app.scss */
 #block #controls .actions .active:after {
   background: 0;
   border-bottom: none;
 }
-/* line 171, ../sass/_app.scss */
+/* line 169, ../sass/_app.scss */
 #block #controls .actions .menu {
   background: url("../img/icon-menu.svg") no-repeat center;
 }
-/* line 174, ../sass/_app.scss */
+/* line 172, ../sass/_app.scss */
+#block #controls .actions .menu-exit {
+  background: url("../img/icon-menu-exit.svg") no-repeat center !important;
+}
+/* line 175, ../sass/_app.scss */
 #block #controls .actions .search {
   background: url("../img/icon-search.svg") no-repeat center;
 }
-/* line 178, ../sass/_app.scss */
+/* line 179, ../sass/_app.scss */
 #block #controls .data {
   color: #888;
   font-size: 1.25em;
+}
+/* line 182, ../sass/_app.scss */
+#block #controls .data .menu-search {
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  margin: 0;
+  padding: 0 5%;
+  top: 0;
+  left: 0;
+  color: #888;
+  font-weight: 200;
+  border: 0;
+  background: none;
+  z-index: 5;
+}
+/* line 195, ../sass/_app.scss */
+#block #controls .data .menu-search:focus {
+  outline: none;
+}
+/* line 202, ../sass/_app.scss */
+#block #bottom {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+/* line 206, ../sass/_app.scss */
+#block #bottom .col {
+  display: inline-bock;
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+  float: left;
+  background: red;
 }
