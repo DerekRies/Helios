@@ -2,8 +2,8 @@
 
 angular.module('HeliosApp')
   .controller('MainCtrl',
-           ['$scope', '$log', 'Kepler',
-   function ($scope,   $log,   Kepler) {
+           ['$scope', '$log', 'Kepler', 'heliosUtils',
+   function ($scope,   $log,   Kepler,   utils) {
 
     $scope.columns = _.range(19);
 
@@ -16,6 +16,7 @@ angular.module('HeliosApp')
         $log.debug(data);
         $scope.systems = _.map(data, function (val, key) {
           val.name = key;
+          val.styleClassName = utils.mapTemperatureToClassName(val.stars[0].temperature);
           return val;
         });
       })
