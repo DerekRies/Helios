@@ -5,7 +5,7 @@ angular.module('HeliosApp')
            ['$scope', '$log', 'Kepler',
    function ($scope,   $log,   Kepler) {
 
-    $scope.columns = _.range(10);
+    $scope.columns = _.range(19);
 
     $scope.toggleMenu = function () {
       $scope.menuState = !$scope.menuState;
@@ -13,7 +13,11 @@ angular.module('HeliosApp')
 
     Kepler.getSystems()
       .success(function (data) {
-        console.log(data);
+        $log.debug(data);
+        $scope.systems = _.map(data, function (val, key) {
+          val.name = key;
+          return val;
+        });
       })
       .error(function (data) {
 
