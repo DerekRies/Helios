@@ -33,10 +33,13 @@ angular.module('HeliosApp')
 
       mapTemperatureToClassName: function (temp) {
         // a function used to map temperatures to star sprite class names
-        if(this.inRange(undefined, 5000, temp)){
+        if(this.inRange(undefined, 3700, temp)){
           return 'red-star';
         }
-        else if(this.inRange(5001, 6500, temp)){
+        else if(this.inRange(3701, 5200, temp)){
+          return 'orange-star';
+        }
+        else if(this.inRange(5201, 6500, temp)){
           return 'yellow-star';
         }
         else if(this.inRange(6501, 10000, temp)){
