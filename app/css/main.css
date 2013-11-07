@@ -501,7 +501,7 @@ html {
   width: 100%;
   height: 100%;
   position: absolute;
-  bottom: -100%;
+  bottom: -60px;
   left: 0;
   padding-bottom: 62px;
   z-index: 3;
@@ -687,14 +687,31 @@ html {
 #block #bottom {
   width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   overflow-y: scroll;
 }
-/* line 206, ../sass/_app.scss */
-#block #bottom .col {
+/* line 207, ../sass/_app.scss */
+#block #bottom .system {
   display: inline-bock;
-  width: 300px;
-  height: 300px;
-  margin: 20px;
+  width: 220px;
+  height: 220px;
+  margin: 40px 0 0 40px;
   float: left;
+}
+/* line 213, ../sass/_app.scss */
+#block #bottom .system .render {
+  width: 100%;
+  height: 200px;
   background: red;
+}
+/* line 218, ../sass/_app.scss */
+#block #bottom .system span {
+  display: block;
+  width: 100%;
+  height: 20px;
+  font-size: 1.15em;
+  color: #ccc;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-align: center;
 }
