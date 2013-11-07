@@ -687,7 +687,7 @@ html {
 #block #bottom {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   overflow-y: scroll;
 }
 /* line 207, ../sass/_app.scss */
@@ -700,11 +700,27 @@ html {
 }
 /* line 213, ../sass/_app.scss */
 #block #bottom .system .render {
-  width: 100%;
-  height: 200px;
-  background: red;
+  width: 199px;
+  height: 199px;
+  margin: 0 auto;
 }
-/* line 218, ../sass/_app.scss */
+/* line 219, ../sass/_app.scss */
+#block #bottom .system .white-star {
+  background: url("../img/stars.png") no-repeat -11px -1px;
+}
+/* line 220, ../sass/_app.scss */
+#block #bottom .system .yellow-star {
+  background: url("../img/stars.png") no-repeat -231px -1px;
+}
+/* line 221, ../sass/_app.scss */
+#block #bottom .system .blue-star {
+  background: url("../img/stars.png") no-repeat -11px -201px;
+}
+/* line 222, ../sass/_app.scss */
+#block #bottom .system .red-star {
+  background: url("../img/stars.png") no-repeat -231px -201px;
+}
+/* line 224, ../sass/_app.scss */
 #block #bottom .system span {
   display: block;
   width: 100%;

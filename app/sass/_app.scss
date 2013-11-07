@@ -202,7 +202,7 @@ html{
 	#bottom{
 		width: 100%;
 		height: 100%;
-		background: rgba(0, 0, 0, .5);
+		background: rgba(0, 0, 0, .8);
 		overflow-y: scroll;
 		.system{
 			display: inline-bock;
@@ -211,10 +211,16 @@ html{
 			margin: 40px 0 0 40px;
 			float: left;
 			.render{
-				width: 100%;
-				height: 200px;
-				background: red;
+				width: 199px;
+				height: 199px;
+				margin: 0 auto;
 			}
+
+			.white-star { background: url('../img/stars.png') no-repeat  -11px   -1px;   }
+			.yellow-star{ background: url('../img/stars.png') no-repeat  -231px  -1px;   }
+			.blue-star  { background: url('../img/stars.png') no-repeat  -11px   -201px; }
+			.red-star   { background: url('../img/stars.png') no-repeat  -231px  -201px; }
+
 			span{
 				display: block;
 				width: 100%;
