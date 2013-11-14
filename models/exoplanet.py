@@ -2,7 +2,7 @@ from google.appengine.ext import ndb
 
 
 class BaseModel(ndb.Model):
-
+  reserved_params = ['include', 'limit', 'orderBy']
   @classmethod
   def get_by_name(cls, name):
     return cls.query(cls.name == name).get()
@@ -23,6 +23,22 @@ class BaseModel(ndb.Model):
         return cls.query(expr).fetch(count)
       else:
         return cls.query(expr).fetch()
+
+  @classmethod
+  def filter_by_mult_params(cls, params, ancestor=None):
+    q = cls.query(ancestor=ancestor)
+    if len(params) == 0:
+      return q
+    for param in params:
+      if param[0] in cls.reserved_params:
+        continue
+      if param[1] == '=':
+        q = q.filter(getattr(cls, param[0]) == param[2])
+      elif param[1] == '>':
+        q = q.filter(getattr(cls, param[0]) > param[2])
+      elif param[1] == '<':
+        q = q.filter(getattr(cls, param[0]) < param[2])
+    return q
 
 
 class Planet(BaseModel):
