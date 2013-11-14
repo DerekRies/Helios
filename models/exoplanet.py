@@ -1,7 +1,31 @@
 from google.appengine.ext import ndb
 
 
-class Planet(ndb.Model):
+class BaseModel(ndb.Model):
+
+  @classmethod
+  def get_by_name(cls, name):
+    return cls.query(cls.name == name).get()
+
+  @classmethod
+  def get_with_includes(cls, expr, includes):
+    if len(includes):
+      return cls.query(expr).get(projection=includes)
+    else:
+      return cls.query(expr).get()
+
+  @classmethod
+  def fetch_with_includes(cls, expr, count=0, includes=[]):
+    if len(includes):
+      return cls.query(expr).fetch(count, projection=includes)
+    else:
+      if count > 0:
+        return cls.query(expr).fetch(count)
+      else:
+        return cls.query(expr).fetch()
+
+
+class Planet(BaseModel):
   name = ndb.StringProperty(required=True)
   kepler_name = ndb.StringProperty()
   koi_name = ndb.StringProperty()
@@ -48,7 +72,7 @@ class Planet(ndb.Model):
     return cls.query(ancestor=ancestor_key)
 
 
-class Star(ndb.Model):
+class Star(BaseModel):
   name = ndb.StringProperty()
   magnitude = ndb.FloatProperty()
   classification = ndb.StringProperty()
@@ -70,7 +94,7 @@ class Star(ndb.Model):
     return cls.query(ancestor=ancestor_key)
 
 
-class System(ndb.Model):
+class System(BaseModel):
   distance = ndb.FloatProperty()
   name = ndb.StringProperty()
   num_planets = ndb.IntegerProperty(default=1)

@@ -84,7 +84,9 @@ class Planet(object):
     self.confirmed = bool(parseInt(data_list[header_map['P. Confirmed']]))
     self.hab_moon_candidate = bool(parseInt(data_list[header_map['P. Hab Moon']]))
     self.disc_method = data_list[header_map['P. Disc. Method']]
-    self.disc_year = parseInt(data_list[header_map['P. Disc. Year']])
+    # Disc Year data looks like '      2012.00'
+    # needs to be parsed to float from string before int
+    self.disc_year = parseInt(parseFloat(data_list[header_map['P. Disc. Year']].lstrip()))
 
 
 class Star(object):

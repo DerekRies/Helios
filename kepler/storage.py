@@ -55,14 +55,23 @@ class StorageEndpoint(webapp2.RequestHandler):
           st = Star(id=star['name'], parent=sys_key)
         st.populate(**star)
         # st.put()
-      ndb.put_multi([sys, pl, st])
+      ndb.put_multi_async([sys, pl, st])
 
     # exoplanet_data = get_all_data()
     # self.response.write(len(exoplanet_data.keys()))
 
 
+class DeleteEndpoint(webapp2.RequestHandler):
+  def get(self):
+    ndb.delete_multi(Planet.query().fetch(keys_only=True))
+    ndb.delete_multi(Star.query().fetch(keys_only=True))
+    ndb.delete_multi(System.query().fetch(keys_only=True))
+    self.response.write('deleted')
+
+
 app = webapp2.WSGIApplication([
-    (r'/.*', StorageEndpoint),
+  (r'/.*', StorageEndpoint),
+  ('/_storeit/delete', DeleteEndpoint)
 ], debug=True)
 
 
