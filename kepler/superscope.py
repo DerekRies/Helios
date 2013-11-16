@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 import requests
-import json as json
 import csv
 import zipfile
+import math
 from StringIO import StringIO
 from circumbinaries import systems as circumbinaries
+try:
+  import simplejson as json
+except:
+  import json as json
 
 # Grabs data from external sources, puts it together, and prepares it for NDB.
 # Does not do the actual storing with NDB, so as to keep it independently
@@ -31,6 +35,8 @@ kepler_candidates_url = 'http://www.hpcf.upr.edu/~abel/phl/phl_hec_all_kepler.cs
 def parseFloat(n, default=0.0):
   try:
     n = float(n)
+    if math.isinf(n):
+      n = default
   except:
     n = default
   return n
@@ -173,7 +179,7 @@ if __name__ == '__main__':
   get_data(kepler_candidates_url, confirmed=False, systems=all_systems)
 
   with open('total.json', 'w') as outfile:
-    json.dump(all_systems, outfile, indent=4)
+    json.dump(all_systems, outfile, indent=4, allow_nan=False)
   outfile.close()
   print sum(map(count_planets, all_systems))
 

@@ -9,7 +9,7 @@ angular.module('HeliosApp')
         if(searchParams){
 
         }
-        return $http.get('/scripts/confirmed.json');
+        return $http.get('/scripts/total.json');
       },
 
       getPlanetsBySystem: function (system, searchParams) {

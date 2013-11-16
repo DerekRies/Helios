@@ -18,12 +18,15 @@
             <input ng-show="menuState" class="menu-search" type="text" placeholder="Search..." ng-model="query" debounce-model-update="300ms">
         </div>
     </header>
-    <section id="bottom" class="systemsBlock" ng-show="menuState">
-        <div class="system" style="transition-delay: {{ $index * 50 }}ms" ng-repeat="system in systems | orderBy: 'num_planets': true | filter:query | limitTo: 10">
+    <section id="bottom" class="systemsBlock">
+        <div class="system" style="transition-delay: {{ $index * 15 }}ms" ng-repeat="system in filteredSystems | orderBy: 'num_planets': true | filter:query | limitTo: 50">
             <div class="render {{system.styleClassName}}">
                 {{ system.num_planets }}
             </div>
             <span>{{ system.name }}</span>
+            <span>{{ system.num_planets }}</span>
         </div>
+        <input type="number" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+        <input type="number" ng-model="filters.num_planets.minVal" debounce-model-update="700ms">
     </div>
 </div><!-- END: Nav Bar -->

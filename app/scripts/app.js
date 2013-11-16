@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('HeliosApp', [
-    'ngRoute',
-    'ngAnimate'
+    'ngRoute'
+    // 'ngAnimate'
   ])
   .config(function ($routeProvider, $logProvider) {
     $routeProvider

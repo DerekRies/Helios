@@ -56,3 +56,8 @@ indexes:
   properties:
   - name: num_planets
   - name: num_stars
+
+- kind: System
+  properties:
+  - name: num_stars
+  - name: num_planets
