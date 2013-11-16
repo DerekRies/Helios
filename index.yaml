@@ -51,3 +51,8 @@ indexes:
   ancestor: yes
   properties:
   - name: radius
+
+- kind: System
+  properties:
+  - name: num_planets
+  - name: num_stars

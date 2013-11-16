@@ -40,6 +40,11 @@ class BaseModel(ndb.Model):
         q = q.filter(getattr(cls, param[0]) < param[2])
     return q
 
+  @classmethod
+  def query_system(cls, ancestor_key):
+    # should return all planets for a given system
+    return cls.query(ancestor=ancestor_key)
+
 
 class Planet(BaseModel):
   name = ndb.StringProperty(required=True)
@@ -82,11 +87,6 @@ class Planet(BaseModel):
   disc_method = ndb.StringProperty()
   disc_year = ndb.IntegerProperty()
 
-  @classmethod
-  def query_system(cls, ancestor_key):
-    # should return all planets for a given system
-    return cls.query(ancestor=ancestor_key)
-
 
 class Star(BaseModel):
   name = ndb.StringProperty()
@@ -103,11 +103,6 @@ class Star(BaseModel):
   age = ndb.FloatProperty()
   mag_from_planet = ndb.FloatProperty()
   size_from_planet = ndb.FloatProperty()
-
-  @classmethod
-  def query_system(cls, ancestor_key):
-    # should return all stars for a given system
-    return cls.query(ancestor=ancestor_key)
 
 
 class System(BaseModel):

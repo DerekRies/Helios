@@ -112,6 +112,8 @@ class SystemCollectionEndpoint(APIEndpoint):
       system_dict = system.to_dict()
       # planets = Planet.query_system(system.key).fetch()
       planet_found = Planet.filter_by_mult_params(planet_params, ancestor=system.key).get()
+      stars = Star.query_system(system.key).fetch()
+      system_dict['stars'] = [star.to_dict() for star in stars]
       if planet_found:
         planets = Planet.query_system(system.key).fetch()
         system_dict['planets'] = [planet.to_dict() for planet in planets]
