@@ -5,7 +5,7 @@ angular.module('HeliosApp')
            ['$scope', '$log', 'Kepler', 'heliosUtils',
    function ($scope,   $log,   Kepler,   utils) {
 
-    $scope.menuState = $scope.sidebarState = true;
+    // $scope.menuState = $scope.sidebarState = true;
 
     $scope.filteredSystems = [];
     $scope.filters = {
@@ -31,6 +31,12 @@ angular.module('HeliosApp')
         'active': false,
         'minVal': 0,
         'maxVal': 50
+      },
+      'ra': {
+        'type': 'inequality',
+        'active': true,
+        'minVal': 3.5486,
+        'maxVal': 22.8869
       }
     };
 

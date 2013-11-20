@@ -23,48 +23,66 @@ Stage -->
         </div>
     </header>
     <section id="bottom" class="systemsBlock" ng-show="menuState">
-        <div class="system" style="transition-delay: {{ $index * 50 }}ms" ng-repeat="system in systems | orderBy: 'distance':true | filter:query | limitTo:10">
+        <div class="system" style="transition-delay: {{ $index * 15 }}ms" ng-repeat="system in filteredSystems | orderBy: 'num_planets': true | filter:query | limitTo: 50">
             <div class="render {{system.styleClassName}}">
                 {{ system.num_planets }}
             </div>
-            <span>{{ system.name }} | {{ system.distance }}</span>
+            <span>{{ system.name }} | {{ system.distance }}| {{ system.ra }}</span>
         </div>
         <div class="filters-sidebar ease-in-out" ng-class="{'filters-sidebar-open': sidebarState}">
-                <div class="cf">
-
-
+            <div class="cf">
                 <div class="top-gear-block">
                     <i class="fa fa-gears"></i>
                 </div>
                 <div class="top-title-block">
                     <h2>FILTER<br />SYSTEMS</h2>
                 </div>
-                 </div>
+            </div>
             <div class="fliter-options cf">
-                <!-- <button class="clear-filter-options"><i class="fa fa-refresh"></i>CLEAR FILTERS</button> -->
                 <div class="item">
                     <div class="item-type"><i class="fa fa-rocket"></i>DISTANCE</div>
-                    <div class="distance-option cf">
+                    <div class="option cf">
                         <span class="left">START</span>
-                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                        <input type="range" ng-model="filters.distance.minVal" debounce-model-update="700ms">
                     </div>
-                    <div class="distance-option cf">
+                    <div class="option cf">
                         <span class="left">END</span>
-                        <input type="range" ng-model="filters.num_planets.minVal" debounce-model-update="700ms">
+                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                        <span class="left">{{ filters.distance.minVal }}</span>
+                        <span class="left">{{ filters.distance.maxVal }}</span>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item-type"><i class="fa fa-male"></i>SIZE</div>
-                    <div class="distance-option cf">
+                    <div class="option cf">
                         <span class="left">SMALL</span>
-                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                        <input type="range" min="{{ filters.ra.minVal }}" max="{{ filters.ra.maxVal }}" ng-model="filters.ra.minVal" debounce-model-update="700ms">
+                    </div>
+                    <div class="option cf">
+                        <span class="left">BIG</span>
+                        <input type="range" min="{{ filters.ra.minVal }}" max="{{ filters.ra.maxVal }}" ng-model="filters.ra.maxVal" debounce-model-update="700ms">
+                        <span class="left">{{ filters.ra.minVal }}</span>
+                        <span class="left">{{ filters.ra.maxVal }}</span>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item-type"><i class="fa fa-fire"></i>TEMPERATURE</div>
-                    <div class="distance-option cf">
+                    <div class="option cf">
                         <span class="left">COLD</span>
-                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                        <input type="range" min="{{ filters.num_planets.minVal }}" max="{{ filters.num_planets.maxVal }}" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-type"><i class="fa fa-globe"></i>NUMBER OF PLANETS</div>
+                    <div class="option cf">
+                        <span class="left">LESS</span>
+                        <input type="range" min="{{ filters.num_planets.minVal }}" max="{{ filters.num_planets.maxVal }}" ng-model="filters.num_planets.minVal" debounce-model-update="700ms">
+                    </div>
+                    <div class="option cf">
+                        <span class="left">MORE</span>
+                        <input type="range" min="{{ filters.num_planets.minVal }}" max="{{ filters.num_planets.maxVal }}" ng-model="filters.num_planets.maxVal" debounce-model-update="700ms">
+                        <span class="left">{{ filters.num_planets.minVal }}</span>
+                        <span class="left">{{ filters.num_planets.maxVal }}</span>
                     </div>
                 </div>
                 <button class="clear-filter-options"><i class="fa fa-refresh"></i>CLEAR FILTERS</button>
