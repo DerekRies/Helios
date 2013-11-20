@@ -1,13 +1,17 @@
-<!-- Stage -->
+Stage -->
 <div id="stage">
 </div><!-- END: Stage -->
 
 <!-- Nav Bar -->
-<div id="block" ng-class="{'open': menuState}">
+<div id="block" class="ease-in-out" ng-class="{'main-block-open': menuState}">
     <header id="controls">
         <div class="location block">
             <p ng-hide="menuState"><strong>MILKY WAY /</strong> THE SUN / PLANETS</p>
-            <p ng-show="menuState">Filter shit go here</p>
+            <ul class="filter-options" ng-show="menuState">
+                <li><button class="search button" ng-click="toggleSidebar()">More Options</button></li>
+                <li>Earthyness</li>
+                <li>Distance</li>
+            </ul>
         </div>
         <nav class="actions">
             <button ng-class="{'menu-exit': menuState}" class="menu button active" ng-click="toggleMenu()">X</button>
@@ -19,11 +23,53 @@
         </div>
     </header>
     <section id="bottom" class="systemsBlock" ng-show="menuState">
-        <div class="system" style="transition-delay: {{ $index * 50 }}ms" ng-repeat="system in systems | orderBy: 'num_planets': true | filter:query | limitTo: 10">
+        <div class="system" style="transition-delay: {{ $index * 50 }}ms" ng-repeat="system in systems | orderBy: 'distance':true | filter:query | limitTo:10">
             <div class="render {{system.styleClassName}}">
                 {{ system.num_planets }}
             </div>
-            <span>{{ system.name }}</span>
+            <span>{{ system.name }} | {{ system.distance }}</span>
+        </div>
+        <div class="filters-sidebar ease-in-out" ng-class="{'filters-sidebar-open': sidebarState}">
+                <div class="cf">
+
+
+                <div class="top-gear-block">
+                    <i class="fa fa-gears"></i>
+                </div>
+                <div class="top-title-block">
+                    <h2>FILTER<br />SYSTEMS</h2>
+                </div>
+                 </div>
+            <div class="fliter-options cf">
+                <!-- <button class="clear-filter-options"><i class="fa fa-refresh"></i>CLEAR FILTERS</button> -->
+                <div class="item">
+                    <div class="item-type"><i class="fa fa-rocket"></i>DISTANCE</div>
+                    <div class="distance-option cf">
+                        <span class="left">START</span>
+                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                    </div>
+                    <div class="distance-option cf">
+                        <span class="left">END</span>
+                        <input type="range" ng-model="filters.num_planets.minVal" debounce-model-update="700ms">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-type"><i class="fa fa-male"></i>SIZE</div>
+                    <div class="distance-option cf">
+                        <span class="left">SMALL</span>
+                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-type"><i class="fa fa-fire"></i>TEMPERATURE</div>
+                    <div class="distance-option cf">
+                        <span class="left">COLD</span>
+                        <input type="range" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                    </div>
+                </div>
+                <button class="clear-filter-options"><i class="fa fa-refresh"></i>CLEAR FILTERS</button>
+                <!-- <button class="clear-filter-options">FILTER</button> -->
+            </div>
         </div>
     </div>
-</div><!-- END: Nav Bar -->
+</div><!-- END: Nav Bar

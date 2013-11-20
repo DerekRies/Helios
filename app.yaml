@@ -31,10 +31,15 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+# Runs the storage script to download new data and store it with NDB
+- url: /_storeit(.*)
+  script: kepler.storage.app
+
+# Serves the data as a RESTful API
 - url: /api/(.*)
-# - url: .*
   script: kepler.api.app
 
+# Everything else is served through the Single Page Application
 - url: .*
   static_files: index.html
   upload: index.html
@@ -42,3 +47,8 @@ handlers:
 libraries:
 - name: webapp2
   version: "2.5.2"
+
+# cron:
+# - description: minutely oh shit test
+#   url: /api/test
+#   schedule: every 1 minutes

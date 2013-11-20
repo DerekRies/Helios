@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700,200italic,300italic,400italic,700italic);
+@import url(../bower_components/font-awesome/css/font-awesome.css);
 /*
 #   Space App Styling
 #   Author: Nick Ruiz, Ulysses Jimenez, Derek Reis
@@ -469,6 +470,43 @@ html[xmlns] .clearfix {
   height: 1%;
 }
 
+/* line 6, ../sass/_base.scss */
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font: normal 13px/18px "Source Sans Pro", sans-serif;
+  overflow: hidden;
+}
+
+/* line 15, ../sass/_base.scss */
+h2 {
+  font-size: 1.75em;
+  font-weight: 200;
+}
+
+/* line 21, ../sass/_base.scss */
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+/* line 26, ../sass/_base.scss */
+.cf:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ */
+/* line 33, ../sass/_base.scss */
+.cf {
+  *zoom: 1;
+}
+
 /* When repeating an element */
 /* line 4, ../sass/_animations.scss */
 .system.ng-enter {
@@ -525,18 +563,16 @@ html[xmlns] .clearfix {
   opacity: 1;
 }
 
-/* line 2, ../sass/_app.scss */
-body,
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font: normal 13px/18px "Source Sans Pro", sans-serif;
-  overflow: hidden;
+/* line 49, ../sass/_animations.scss */
+.ease-in-out {
+  -webkit-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
+  -moz-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
+  -ms-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
+  -o-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
+  transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
 }
 
-/* line 12, ../sass/_app.scss */
+/* line 2, ../sass/_app.scss */
 #stage {
   width: 100%;
   height: 100%;
@@ -547,12 +583,12 @@ html {
   background: url("../img/nebula-blue.jpg") no-repeat center;
 }
 
-/* line 23, ../sass/_app.scss */
-.open {
+/* line 13, ../sass/_app.scss */
+.main-block-open {
   bottom: -60px!important;
 }
 
-/* line 28, ../sass/_app.scss */
+/* line 18, ../sass/_app.scss */
 #block {
   width: 100%;
   height: 100%;
@@ -561,20 +597,15 @@ html {
   left: 0;
   padding-bottom: 62px;
   z-index: 3;
-  -webkit-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
-  -moz-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
-  -ms-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
-  -o-transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
-  transition: all 300ms cubic-bezier(0.98, 0.02, 0, 0.9);
 }
-/* line 45, ../sass/_app.scss */
+/* line 28, ../sass/_app.scss */
 #block #controls {
   width: 100%;
   height: 60px;
   position: relative;
   border-top: 1px solid black;
 }
-/* line 50, ../sass/_app.scss */
+/* line 33, ../sass/_app.scss */
 #block #controls:before {
   content: '';
   width: 100%;
@@ -586,7 +617,7 @@ html {
   opacity: .1;
   z-index: 2;
 }
-/* line 62, ../sass/_app.scss */
+/* line 45, ../sass/_app.scss */
 #block #controls .block {
   width: 40%;
   height: 60px;
@@ -599,7 +630,7 @@ html {
   border-bottom: 1px solid black;
   background: url("../img/gradient-black.png") repeat-x bottom left;
 }
-/* line 73, ../sass/_app.scss */
+/* line 56, ../sass/_app.scss */
 #block #controls .block:before {
   content: '';
   width: 100%;
@@ -611,7 +642,7 @@ html {
   opacity: .1;
   z-index: 3;
 }
-/* line 86, ../sass/_app.scss */
+/* line 69, ../sass/_app.scss */
 #block #controls .location p {
   margin: 0;
   padding: 0;
@@ -620,21 +651,35 @@ html {
   font-weight: 100;
   font-style: italic;
 }
-/* line 95, ../sass/_app.scss */
+/* line 77, ../sass/_app.scss */
+#block #controls .location ul.filter-options {
+  position: relative;
+  margin: 0;
+  list-style: none;
+  color: white;
+  z-index: 4;
+}
+/* line 83, ../sass/_app.scss */
+#block #controls .location ul.filter-options li {
+  display: inline;
+  margin: 0 0 0 20px;
+  font-size: 1.25em;
+}
+/* line 90, ../sass/_app.scss */
 #block #controls .actions {
   width: 9.9%;
   height: 61px;
   float: left;
   position: relative;
 }
-/* line 101, ../sass/_app.scss */
+/* line 96, ../sass/_app.scss */
 #block #controls .actions:before, #block #controls .actions:after {
   content: '';
   width: 100%;
   position: absolute;
   z-index: 3;
 }
-/* line 107, ../sass/_app.scss */
+/* line 102, ../sass/_app.scss */
 #block #controls .actions:before {
   height: 100%;
   top: 1px;
@@ -642,14 +687,14 @@ html {
   border-left: 1px solid white;
   opacity: .1;
 }
-/* line 114, ../sass/_app.scss */
+/* line 109, ../sass/_app.scss */
 #block #controls .actions:after {
   height: 98%;
   top: 0;
   left: -1px;
   border-left: 1px solid black;
 }
-/* line 121, ../sass/_app.scss */
+/* line 116, ../sass/_app.scss */
 #block #controls .actions .button {
   width: 50%;
   height: 100%;
@@ -662,11 +707,11 @@ html {
   -moz-border-radius: 0;
   border-radius: 0;
 }
-/* line 133, ../sass/_app.scss */
+/* line 128, ../sass/_app.scss */
 #block #controls .actions .button:focus {
   outline: none;
 }
-/* line 137, ../sass/_app.scss */
+/* line 132, ../sass/_app.scss */
 #block #controls .actions .button:before, #block #controls .actions .button:after {
   content: '';
   width: 100%;
@@ -674,7 +719,7 @@ html {
   position: absolute;
   z-index: 4;
 }
-/* line 144, ../sass/_app.scss */
+/* line 139, ../sass/_app.scss */
 #block #controls .actions .button:before {
   top: 1px;
   left: -1px;
@@ -682,7 +727,7 @@ html {
   border-right: 1px solid white;
   opacity: .1;
 }
-/* line 151, ../sass/_app.scss */
+/* line 146, ../sass/_app.scss */
 #block #controls .actions .button:after {
   top: 0;
   left: 0;
@@ -690,37 +735,37 @@ html {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
 }
-/* line 159, ../sass/_app.scss */
+/* line 154, ../sass/_app.scss */
 #block #controls .actions .active {
   border-bottom: none;
 }
-/* line 161, ../sass/_app.scss */
+/* line 156, ../sass/_app.scss */
 #block #controls .actions .active:before {
   border-bottom: none;
 }
-/* line 164, ../sass/_app.scss */
+/* line 159, ../sass/_app.scss */
 #block #controls .actions .active:after {
   background: none;
   border-bottom: none;
 }
-/* line 169, ../sass/_app.scss */
+/* line 164, ../sass/_app.scss */
 #block #controls .actions .menu {
   background: url("../img/icon-menu.svg") no-repeat center;
 }
-/* line 172, ../sass/_app.scss */
+/* line 167, ../sass/_app.scss */
 #block #controls .actions .menu-exit {
   background: url("../img/icon-menu-exit.svg") no-repeat center !important;
 }
-/* line 175, ../sass/_app.scss */
+/* line 170, ../sass/_app.scss */
 #block #controls .actions .search {
   background: url("../img/icon-search.svg") no-repeat center;
 }
-/* line 179, ../sass/_app.scss */
+/* line 174, ../sass/_app.scss */
 #block #controls .data {
   color: #888;
   font-size: 1.25em;
 }
-/* line 182, ../sass/_app.scss */
+/* line 177, ../sass/_app.scss */
 #block #controls .data .menu-search {
   position: absolute;
   width: 90%;
@@ -735,18 +780,142 @@ html {
   background: none;
   z-index: 5;
 }
-/* line 195, ../sass/_app.scss */
+/* line 190, ../sass/_app.scss */
 #block #controls .data .menu-search:focus {
   outline: none;
 }
-/* line 202, ../sass/_app.scss */
+/* line 197, ../sass/_app.scss */
 #block #bottom {
+  position: relative;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
   overflow-y: scroll;
 }
-/* line 207, ../sass/_app.scss */
+/* line 203, ../sass/_app.scss */
+#block #bottom .filters-sidebar {
+  position: absolute;
+  width: 300px;
+  height: 100%;
+  top: 0;
+  left: -380px;
+  background: #070707;
+}
+/* line 212, ../sass/_app.scss */
+#block #bottom .filters-sidebar .top-title-block,
+#block #bottom .filters-sidebar .top-gear-block {
+  height: 100px;
+  float: left;
+  font-weight: 100;
+  line-height: 100px;
+}
+/* line 218, ../sass/_app.scss */
+#block #bottom .filters-sidebar .top-gear-block {
+  width: 100px;
+  color: #070707;
+  font-size: 3.5em;
+  text-align: center;
+  background: #2c4f63;
+}
+/* line 224, ../sass/_app.scss */
+#block #bottom .filters-sidebar .top-gear-block i {
+  text-shadow: 1px 1px 1px #49616b;
+}
+/* line 228, ../sass/_app.scss */
+#block #bottom .filters-sidebar .top-title-block {
+  width: 200px;
+  background: #1a1a1a;
+}
+/* line 232, ../sass/_app.scss */
+#block #bottom .filters-sidebar .fliter-options {
+  padding: 20px;
+  border-top: 1px solid #222222;
+}
+/* line 236, ../sass/_app.scss */
+#block #bottom .filters-sidebar h2 {
+  display: inline-block;
+  margin-left: 30px;
+  color: #ccc;
+  font-size: 2em;
+  line-height: 30px;
+  font-weight: 300;
+  vertical-align: middle;
+}
+/* line 246, ../sass/_app.scss */
+#block #bottom .filters-sidebar h3 {
+  margin: 30px 0;
+  color: #59839B;
+  font-size: 2.5em;
+  font-weight: 400;
+  text-align: left;
+  line-height: normal;
+}
+/* line 254, ../sass/_app.scss */
+#block #bottom .filters-sidebar .item-type {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  color: #ccc;
+  font-size: 1.35em;
+  font-style: italic;
+}
+/* line 262, ../sass/_app.scss */
+#block #bottom .filters-sidebar i {
+  margin-right: 10px;
+}
+/* line 265, ../sass/_app.scss */
+#block #bottom .filters-sidebar .item {
+  padding: 20px 0;
+}
+/* line 270, ../sass/_app.scss */
+#block #bottom .filters-sidebar .distance-option {
+  width: 100%;
+  margin-bottom: 10px;
+}
+/* line 275, ../sass/_app.scss */
+#block #bottom .filters-sidebar .left,
+#block #bottom .filters-sidebar input[type="range"] {
+  display: inline-block;
+  height: 20px;
+  float: left;
+  text-align: left;
+  vertical-align: middle;
+}
+/* line 282, ../sass/_app.scss */
+#block #bottom .filters-sidebar .left {
+  width: 48px;
+  padding-left: 10px;
+  color: #4E8AAC;
+  font-weight: 400;
+  line-height: 20px;
+  border-left: 2px solid #4e8aac;
+}
+/* line 290, ../sass/_app.scss */
+#block #bottom .filters-sidebar input[type="range"] {
+  width: 180px;
+  margin: 0 10px;
+  background: #333;
+}
+/* line 295, ../sass/_app.scss */
+#block #bottom .filters-sidebar .clear-filter-options {
+  padding: 0 20px;
+  color: #070707;
+  line-height: 40px;
+  background: #2c4f63;
+  border: 0;
+  border-top: 1px solid #49616b;
+  text-shadow: 1px 1px 1px #49616b;
+  border-radius: 2px;
+}
+/* line 307, ../sass/_app.scss */
+#block #bottom .filters-sidebar-open {
+  -webkit-transform: translate3d(380px, 0, 0);
+  -moz-transform: translate3d(380px, 0, 0);
+  -ms-transform: translate3d(380px, 0, 0);
+  -o-transform: translate3d(380px, 0, 0);
+  transform: translate3d(380px, 0, 0);
+}
+/* line 310, ../sass/_app.scss */
 #block #bottom .system {
   display: inline-bock;
   width: 220px;
@@ -754,33 +923,33 @@ html {
   margin: 40px 0 0 40px;
   float: left;
 }
-/* line 213, ../sass/_app.scss */
+/* line 316, ../sass/_app.scss */
 #block #bottom .system .render {
   width: 183px;
   height: 183px;
   margin: 0 auto;
 }
-/* line 219, ../sass/_app.scss */
+/* line 322, ../sass/_app.scss */
 #block #bottom .system .white-star {
   background: url("../img/stars.png") no-repeat -19px -11px;
 }
-/* line 220, ../sass/_app.scss */
+/* line 323, ../sass/_app.scss */
 #block #bottom .system .yellow-star {
   background: url("../img/stars.png") no-repeat -239px -13px;
 }
-/* line 221, ../sass/_app.scss */
+/* line 324, ../sass/_app.scss */
 #block #bottom .system .blue-star {
   background: url("../img/stars.png") no-repeat -19px -213px;
 }
-/* line 222, ../sass/_app.scss */
+/* line 325, ../sass/_app.scss */
 #block #bottom .system .orange-star {
   background: url("../img/stars.png") no-repeat -239px -211px;
 }
-/* line 223, ../sass/_app.scss */
+/* line 326, ../sass/_app.scss */
 #block #bottom .system .red-star {
   background: url("../img/stars.png") no-repeat -19px -411px;
 }
-/* line 225, ../sass/_app.scss */
+/* line 328, ../sass/_app.scss */
 #block #bottom .system span {
   display: block;
   width: 100%;

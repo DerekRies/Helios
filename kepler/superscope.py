@@ -21,12 +21,12 @@ from circumbinaries import systems as circumbinaries
 
 confirmed_url = 'http://www.hpcf.upr.edu/~abel/phl/phl_hec_all_confirmed.csv.zip'
 unconfirmed_url = 'http://www.hpcf.upr.edu/~abel/phl/phl_hec_all_unconfirmed.csv.zip'
+kepler_candidates_url = 'http://www.hpcf.upr.edu/~abel/phl/phl_hec_all_kepler.csv.zip'
 
 # Initialized with all Circumbinary Systems
 # These are systems with more than 1 star that is being orbited by a planet
 # Many systems are binary but only a few are circumbinary.
 # Only circumbinary star systems will be rendered with > 2 stars.
-systems = circumbinaries
 
 def parseFloat(n, default=0.0):
   try:
@@ -41,6 +41,7 @@ def parseInt(n, default=0):
   except:
     n = default
   return n
+
 
 
 class Planet(object):
@@ -79,19 +80,20 @@ class Planet(object):
     self.int_esi = parseFloat(data_list[header_map['P. Int ESI']])
     self.surface_esi = parseFloat(data_list[header_map['P. Surf ESI']])
     self.esi = parseFloat(data_list[header_map['P. ESI']])
-    self.habitable = parseInt(data_list[header_map['P. Habitable']], 0)
-    self.confirmed = parseInt(data_list[header_map['P. Confirmed']])
-    self.hab_moon_candidate = parseInt(data_list[header_map['P. Hab Moon']])
+    self.habitable = bool(parseInt(data_list[header_map['P. Habitable']], 0))
+    self.confirmed = bool(parseInt(data_list[header_map['P. Confirmed']]))
+    self.hab_moon_candidate = bool(parseInt(data_list[header_map['P. Hab Moon']]))
     self.disc_method = data_list[header_map['P. Disc. Method']]
-    self.disc_year = parseInt(data_list[header_map['P. Disc. Year']])
+    # Disc Year data looks like '      2012.00'
+    # needs to be parsed to float from string before int
+    self.disc_year = parseInt(parseFloat(data_list[header_map['P. Disc. Year']].lstrip()))
 
 
 class Star(object):
   def __init__(self, data_list, header_map):
     self.name = data_list[header_map['S. Name']]
     self.magnitude = parseFloat(data_list[header_map['S. Appar Mag']])
-    self.type = data_list[header_map['S. Type']]
-    self.distance = parseFloat(data_list[header_map['S. Distance (pc)']])
+    self.classification = data_list[header_map['S. Type']]
     self.mass = parseFloat(data_list[header_map['S. Mass (SU)']])
     self.radius = parseFloat(data_list[header_map['S. Radius (SU)']])
     self.hd_name = data_list[header_map['S. Name HD']]
@@ -105,24 +107,34 @@ class Star(object):
     self.size_from_planet = parseFloat(data_list[header_map['S. Size from Planet (deg)']])
 
 
+def get_all_data():
+  all_data = dict(circumbinaries)
+  for sys in all_data:
+    for star in all_data[sys]['stars']:
+      del star['distance']
+  get_data(confirmed_url, confirmed=1, systems=all_data)
+  get_data(unconfirmed_url, confirmed=0, systems=all_data)
+  get_data(kepler_candidates_url, confirmed=0, systems=all_data)
+  return all_data
+
 def get_header_map(headers):
   header_map = {}
   for ind, header in enumerate(headers):
     header_map[header] = ind
   return header_map
 
-def get_data(url):
+def get_data(url, confirmed=1, systems={}):
   r = requests.get(url=url)
   z = zipfile.ZipFile(StringIO(r.content))
   with z.open(z.namelist()[0]) as datafile:
     data = datafile.read().split('\n')
     header_map = get_header_map(data[0].split(','))
-    print header_map
     for line in data[1:]:
       if not line.strip():
         break
       datum = line.split(',')
       planet = Planet(datum, header_map)
+      planet.confirmed = confirmed
       star = Star(datum, header_map)
       if planet.star_name not in systems:
         system = {}
@@ -135,7 +147,7 @@ def get_data(url):
         system['semimajor_axis'] = 0
         system['period'] = 0
         system['num_stars'] = 1
-        system['distance'] = star.distance
+        system['distance'] = parseFloat(datum[header_map['S. Distance (pc)']])
         system['num_planets'] = parseInt(datum[header_map['S. No. Planets']])
         system['ra'] = parseFloat(datum[header_map['S. RA (hrs)']])
         system['dec'] = parseFloat(datum[header_map['S. DEC (deg)']])
@@ -144,10 +156,24 @@ def get_data(url):
         system['stars'].append(star.__dict__)
         systems[planet.star_name] = system
       systems[planet.star_name]['planets'].append(planet.__dict__)
-    with open('confirmed.json', 'w') as outfile:
-      json.dump(systems, outfile, indent=4)
-    outfile.close()
     z.close()
+    print len(systems)
 
 
-get_data(confirmed_url)
+def count_planets(system):
+  return len(all_systems[system]['planets'])
+
+if __name__ == '__main__':
+  all_systems = dict(circumbinaries)
+  for sys in all_systems:
+    for star in all_systems[sys]['stars']:
+      star.pop('distance', None)
+  get_data(confirmed_url, confirmed=True, systems=all_systems)
+  get_data(unconfirmed_url, confirmed=False, systems=all_systems)
+  get_data(kepler_candidates_url, confirmed=False, systems=all_systems)
+
+  with open('total.json', 'w') as outfile:
+    json.dump(all_systems, outfile, indent=4)
+  outfile.close()
+  print sum(map(count_planets, all_systems))
+

@@ -10,3 +10,18 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Planet
+  properties:
+  - name: name
+  - name: escape_velocity
+
+- kind: Planet
+  properties:
+  - name: name
+  - name: escape_velocity
+  - name: sph
+
+- kind: Planet
+  properties:
+  - name: name
+  - name: sph
