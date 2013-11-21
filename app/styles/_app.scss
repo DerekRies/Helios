@@ -44,19 +44,26 @@
 
         .filter-toggle-button{
             position: absolute;
-            width: 60px;
             height: 60px;
             left: 0;
             top: 0;
-            text-align: center;
-            font-size: 2em;
-            line-height: 60px;
+            text-align: left;
+            font-size: 1.85em;
+            font-weight: 100;
             color: white;
-            border: 0;
-            background: 0;
             z-index: 5;
-            &:focus{
-                outline: none;
+            i{
+                width: 60px;
+                height: 60px;
+                color: white;
+                text-align: center;
+                line-height: 60px;
+            }
+            .close{
+                margin-right: 20px;
+                color: #070707;
+                background: #2c4f63;
+                text-shadow: 1px 1px 1px #49616b;
             }
         }
 

@@ -5,7 +5,6 @@
     @include transition(opacity 300ms linear);
 }
 
-// Fade
 .system.ng-enter,
 .system.ng-leave.ng-leave-active {
   opacity:0;
@@ -16,19 +15,22 @@
 }
 
 
+// Fade
+.delay{
+   @include transition(all 2s linear);
+}
 
 /* When hiding an element */
-.systemsBlock.ng-hide-add {
-  @include single-transition(opacity 300ms ease-in-out);
-
+.fade.ng-hide-add {
+  @include transition-delay(all 2s linear);
   opacity:1;
 }
-.systemsBlock.ng-hide-add.ng-hide-add-active {
+.fade.ng-hide-add.ng-hide-add-active {
   opacity:0;
 }
 
 /* When showing an element */
-.systemsBlock.ng-hide-remove {
+.fade.ng-hide-remove {
   -webkit-transition:0.5s linear all;
   -moz-transition:0.5s linear all;
   -o-transition:0.5s linear all;
@@ -40,8 +42,8 @@
   display:block!important;
   opacity:0;
 }
-.systemsBlock,
-.systemsBlock.ng-hide-remove.ng-hide-remove-active {
+.fade,
+.fade.ng-hide-remove.ng-hide-remove-active {
   opacity:1;
 }
 

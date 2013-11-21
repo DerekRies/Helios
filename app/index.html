@@ -38,19 +38,21 @@
           <header id="controls">
               <div class="location block">
                   <p ng-hide="menuState"><strong>MILKY WAY /</strong> THE SUN / PLANETS</p>
-                  <button class="filter-toggle-button" ng-show="menuState" ng-click="toggleSidebar()"><i class="fa fa-list"></i></button><p>FILTER SYSTEMS</p>
+                  <a class="filter-toggle-button" ng-show="menuState" ng-click="toggleSidebar()">
+                    <span class="fade" ng-hide="sidebarState"><i class="fa fa-list"></i> FILTER SYSTEMS</span>
+                    <span class="fade" ng-show="sidebarState"><i class="fa fa-times close"></i></span>
+                  </a>
               </div>
               <nav class="actions">
-                  <button ng-class="{'menu-exit': menuState}" class="menu button active" ng-click="toggleMenu()">X</button>
-                  <!-- <button class="search button">Os</button> -->
+                  <button ng-class="{'menu-exit active': menuState}" class="menu button" ng-click="toggleMenu()">X</button>
               </nav>
               <div class="data block">
                   <small ng-hide="menuState">mass: 1.18sol</small>
                   <input ng-show="menuState" class="menu-search" type="text" placeholder="Search for systems..." ng-model="query" debounce-model-update="300ms">
               </div>
           </header>
-
-          <section id="bottom" class="systemsBlock" ng-show="menuState">
+          <!-- Systems Block -->
+          <section id="bottom" class="delay fade" ng-show="menuState">
               <div class="system" style="transition-delay: {{ $index * 15 }}ms" ng-repeat="system in filteredSystems | orderBy: 'num_planets': true | filter:query | limitTo: 50">
                   <div class="render {{system.styleClassName}}" ng-click="goToSystem(system)">
                       <div class="planet-count">
