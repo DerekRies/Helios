@@ -12,7 +12,8 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- <link rel="stylesheet" href="bower_components/nouislider/jquery.nouislider.css"> -->
         <!-- endbuild -->
 </head>
   <body ng-app="HeliosApp">
@@ -46,6 +47,7 @@
     <script src="bower_components/lodash/dist/lodash.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="bower_components/nouislider/jquery.nouislider.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/services/Hubble.js"></script>
@@ -53,6 +55,7 @@
         <script src="scripts/directives/debounceModelUpdate.js"></script>
         <script src="scripts/services/heliosUtils.js"></script>
         <script src="scripts/filters/range.js"></script>
+        <script src="scripts/directives/nouislider.js"></script>
         <!-- endbuild -->
 </body>
 </html>

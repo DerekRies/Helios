@@ -2,10 +2,15 @@
 
 angular.module('HeliosApp')
   .controller('MainCtrl',
-           ['$scope', '$log', 'Kepler', 'heliosUtils',
-   function ($scope,   $log,   Kepler,   utils) {
+           ['$scope', '$log', 'Kepler', 'heliosUtils', '$timeout',
+   function ($scope,   $log,   Kepler,   utils, $timeout) {
 
-    // $scope.menuState = $scope.sidebarState = true;
+    $scope.menuState = $scope.sidebarState = true;
+
+    $scope.numStars = [
+      {val: 1},
+      {val: 2}
+    ];
 
     $scope.filteredSystems = [];
     $scope.filters = {
@@ -17,14 +22,16 @@ angular.module('HeliosApp')
       'distance': {
         'type': 'inequality',
         'active': true,
-        'minVal': 0.1,
-        'maxVal': 10
+        'minVal': 0,
+        'maxVal': 10,
+        'cap': 10
       },
       'num_planets': {
         'type': 'inequality',
         'active': true,
-        'minVal': 1,
-        'maxVal': 7
+        'minVal': 0,
+        'maxVal': 7,
+        'cap': 7
       },
       'dec': {
         'type': 'inequality',
@@ -35,15 +42,22 @@ angular.module('HeliosApp')
       'ra': {
         'type': 'inequality',
         'active': true,
-        'minVal': 3.5486,
-        'maxVal': 22.8869
+        'minVal': 0,
+        'maxVal': 22.8869,
+        'cap': 22.8869
+      },
+      'num_stars': {
+        'type': 'equality',
+        'val': 1,
+        'active': false
       }
     };
+
+    var cleanFilters = _.clone($scope.filters, true);
 
     $scope.toggleMenu = function () {
       $scope.menuState = !$scope.menuState;
     };
-
 
     $scope.toggleSidebar = function () {
       $scope.sidebarState = !$scope.sidebarState;
@@ -59,6 +73,9 @@ angular.module('HeliosApp')
         $scope.filterSystems();
       });
 
+    $scope.clearFilters = function () {
+      $scope.filters = _.clone(cleanFilters, true);
+    };
 
     $scope.filterSystems = function () {
       $scope.filteredSystems = _.filter($scope.systems, function (system) {
