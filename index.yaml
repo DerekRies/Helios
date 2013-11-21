@@ -24,4 +24,30 @@ indexes:
 - kind: Planet
   properties:
   - name: name
+  - name: gravity
+  - name: min_surface_temp
+
+- kind: Planet
+  properties:
+  - name: name
+  - name: min_surface_temp
+
+- kind: Planet
+  properties:
+  - name: name
   - name: sph
+
+- kind: Planet
+  ancestor: yes
+  properties:
+  - name: disc_year
+
+- kind: Planet
+  ancestor: yes
+  properties:
+  - name: esi
+
+- kind: Planet
+  ancestor: yes
+  properties:
+  - name: radius

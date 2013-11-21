@@ -60,7 +60,6 @@ angular.module('HeliosApp')
     };
 
     var cleanFilters = _.clone($scope.filters, true);
-
     $scope.toggleMenu = function () {
       $scope.menuState = !$scope.menuState;
     };
