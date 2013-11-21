@@ -33,7 +33,7 @@ var Star = function () {
     useScreenCoordinates: false,
     transparent: false,
     blending: THREE.AdditiveBlending,
-    opacity: 0.7
+    opacity: 0.4
   });
   this._fadeoffSprite = new THREE.Sprite(this._fadeoffMaterial);
   this._fadeoffSprite.scale.set(UNITS.STELLAR * 8, UNITS.STELLAR * 8, 1.0);
@@ -49,8 +49,6 @@ var Star = function () {
       [10000,0x5a73ff,0x425fff],  // B
       [25000,0x5a73ff,0x425fff]  // O
   ];
-
-
 
   ///////////////
   // Particles //
@@ -129,6 +127,13 @@ var Star = function () {
 
   this.drawable.add(this.glowParticleSphere);
   this.drawable.add(this.nebulaParticleSphere);
+
+  //////////////////
+  // Light Source //
+  //////////////////
+
+  this._light = new THREE.PointLight(0xffffff, 3, 1000);
+  this.drawable.add(this._light);
 }
 
 Star.prototype.update = function() {
@@ -139,12 +144,12 @@ Star.prototype.update = function() {
 
 Star.prototype.setup = function(starData) {
   // body...
-  console.log(starData);
   this.color = this.determineColor(starData.temperature);
-  this.starData = starData;
+  this.data = starData;
   this._fadeoffSprite.material.color.setHex(this.color);
   this._coronaSprite.material.color.setHex(this.color);
   this._starDrawable.material.color.setHex(this.color);
+  this._light.color.setHex(this.color);
   this.setParticleColor(this.color);
   this.scale(starData.radius);
   // this.drawable.scale.set(starData.radius, starData.radius, starData.radius);
@@ -175,7 +180,6 @@ Star.prototype.scale = function(n) {
 Star.prototype.determineColor = function(temperature) {
   for(var i = 1; i < this._averages.length ; i++) {
     if(temperature <= this._averages[i][0]){
-      console.log(i, temperature, this._averages[i][1]);
       return this._averages[i-1][1];
     }
   }

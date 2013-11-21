@@ -34,20 +34,27 @@ White Dwarf = 1 HU
 
 var UNITS = {};
 UNITS.STELLAR = 100;
-UNITS.EARTH = 4;
+UNITS.EARTH = 7;
 UNITS.GLOBAL_SCALE = 1;
 
 UNITS.convertPlanetUnitsToThreeUnits = function (n) {
-  return n * UNITS.EARTH * UNITS.GLOBAL_SCALE;
-}
+  return (Math.pow(n, 1/2) * UNITS.EARTH);
+  // return n * UNITS.EARTH * UNITS.GLOBAL_SCALE;
+};
 
 UNITS.convertStarUnitsToThreeUnits = function (n) {
   return n * UNITS.STELLAR * UNITS.GLOBAL_SCALE;
-}
+};
 
 UNITS.convertAUtoThreeUnits = function (n) {
-  return ((Math.pow(n, 1/3.35) * 6000) - 1000);
-}
+  return ((Math.pow(n, 1/5) * 1000) - 300);
+};
+
+var f = UNITS.convertPlanetUnitsToThreeUnits;
+console.log(f(.1));
+console.log(f(1));
+console.log(f(10));
+console.log(f(100));
 
 
 var TEXTURES = {};

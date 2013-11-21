@@ -1,6 +1,7 @@
 'use strict';
 
 var Star = window.Helios.Star;
+var Planet = window.Helios.Planet;
 
 var Sim = function () {};
 
@@ -14,18 +15,18 @@ Sim.prototype.init = function() {
   this.clock = window.Helios.clock;
 
   this.scene = new THREE.Scene();
-  this.camera = new THREE.PerspectiveCamera(70, w/h, 0.1, 6000);
+  this.camera = new THREE.PerspectiveCamera(70, w/h, 0.1, 50000);
   this.renderer = new THREE.WebGLRenderer({antialias: true});
   this.renderer.setSize(w, h);
   document.body.appendChild(this.renderer.domElement);
   this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
   this.makeSkybox();
-  this.camera.position.z = 300;
+  this.camera.position.z = 700;
   this.camera.lookAt(this.scene.position);
 };
 
 Sim.prototype.makeSkybox = function() {
-  this._skyGeometry = new THREE.CubeGeometry(5000,5000,5000);
+  this._skyGeometry = new THREE.CubeGeometry(49999,49999,49999);
   this._skyMaterial = new THREE.MeshBasicMaterial({color: 0x0B1317, side: THREE.BackSide});
   this._skyBox = new THREE.Mesh(this._skyGeometry, this._skyMaterial);
   this.scene.add(this._skyBox);
@@ -34,6 +35,11 @@ Sim.prototype.makeSkybox = function() {
 Sim.prototype.updateSystem = function() {
   if(typeof this.star !== 'undefined') {
     this.star.update();
+  }
+  if(typeof this.planets !== 'undefined') {
+    for(var i = 0; i < this.planets.length ; i++) {
+      this.planets[i].update();
+    }
   }
 };
 
@@ -46,7 +52,7 @@ Sim.prototype.tick = function() {
 Sim.prototype.loadSystem = function(system) {
   this.system = system;
   this.makeStar(system.stars[0]);
-  // this.makePlanets(system.planets);
+  this.makePlanets(system.planets);
 };
 
 Sim.prototype.makeStar = function(star) {
@@ -58,10 +64,28 @@ Sim.prototype.makeStar = function(star) {
   return this.star;
 };
 
+Sim.prototype.clearPlanets = function() {
+  if(typeof this.planets !== 'undefined') {
+    for(var i = 0; i < this.planets.length ; i++) {
+      console.log(this.planets[i].drawable.position.x);
+      this.scene.remove(this.planets[i].drawable);
+      this.scene.remove(this.planets[i].orbit);
+    }
+  }
+};
+
 Sim.prototype.makePlanets = function(planets) {
+  this.clearPlanets();
   this.planets = _.map(planets, function (planet) {
     return new Planet(planet);
   });
+  for(var i = 0; i < this.planets.length ; i++) {
+    this.scene.add(this.planets[i].drawable);
+    this.scene.add(this.planets[i].orbit);
+  }
+};
+
+Sim.prototype.toggleOrbitLines = function() {
 };
 
 var s = new Sim();
@@ -72,6 +96,10 @@ function tick() {
   s.tick();
 }
 tick();
+// setInterval(function () {
+//   tick();
+// }, 16);
+
 // var si = 0;
 // var systemNames = _.map(systems, function (val, key) {
 //   return key;
@@ -81,4 +109,4 @@ tick();
 //   s.loadSystem(systems[systemNames[si % systemNames.length]]);
 // }, 3000);
 
-s.loadSystem(systems['KOI-3554']);
+s.loadSystem(systems['KOI-2220']);
