@@ -15,7 +15,6 @@ var Star = function () {
     map: TEXTURES.CORONA,
     color: 0xffffff,
     useScreenCoordinates: false,
-    alignment: THREE.SpriteAlignment.center,
     transparent: false,
     blending: THREE.AdditiveBlending
   });
@@ -32,7 +31,6 @@ var Star = function () {
     map: TEXTURES.FADEOFF,
     color: 0xffffff,
     useScreenCoordinates: false,
-    alignment: THREE.SpriteAlignment.center,
     transparent: false,
     blending: THREE.AdditiveBlending,
     opacity: 0.7

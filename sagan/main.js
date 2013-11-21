@@ -30,7 +30,6 @@ function init() {
     map: TEXTURES.FADEOFF,
     color: starColor,
     useScreenCoordinates: false,
-    alignment: THREE.SpriteAlignment.center,
     transparent: false,
     blending: THREE.AdditiveBlending,
     opacity: 0.7
@@ -44,7 +43,6 @@ function init() {
     map: TEXTURES.CORONA,
     color: starColor,
     useScreenCoordinates: false,
-    alignment: THREE.SpriteAlignment.center,
     transparent: false,
     blending: THREE.AdditiveBlending
   });
