@@ -88,25 +88,4 @@ Sim.prototype.makePlanets = function(planets) {
 Sim.prototype.toggleOrbitLines = function() {
 };
 
-var s = new Sim();
-s.init();
-
-function tick() {
-  requestAnimationFrame(tick);
-  s.tick();
-}
-tick();
-// setInterval(function () {
-//   tick();
-// }, 16);
-
-// var si = 0;
-// var systemNames = _.map(systems, function (val, key) {
-//   return key;
-// });
-// setInterval(function () {
-//   si++
-//   s.loadSystem(systems[systemNames[si % systemNames.length]]);
-// }, 3000);
-
-s.loadSystem(systems['KOI-2220']);
+window.Helios.Sim = Sim;

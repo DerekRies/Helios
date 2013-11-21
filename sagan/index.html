@@ -694,6 +694,29 @@
     <script src="star.js"></script>
     <script src="planet.js"></script>
     <script src="sim.js"></script>
+    <script>
+        var s = new Sim();
+s.init();
 
+function tick() {
+  requestAnimationFrame(tick);
+  s.tick();
+}
+tick();
+// setInterval(function () {
+//   tick();
+// }, 16);
+
+// var si = 0;
+// var systemNames = _.map(systems, function (val, key) {
+//   return key;
+// });
+// setInterval(function () {
+//   si++
+//   s.loadSystem(systems[systemNames[si % systemNames.length]]);
+// }, 3000);
+
+s.loadSystem(systems['KOI-2220']);
+    </script>
   </body>
 </html>
