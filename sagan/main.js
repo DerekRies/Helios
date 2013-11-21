@@ -1,78 +1,197 @@
 'use strict';
 
-/*=================================================================
+var starColors = [0x5a73ff, 0x6e9aff, 0xc0dbff, 0xfff3a5, 0xffba78, 0xff693b];
+var starColor = _.sample(starColors);
+var scene,camera,clock,delta,renderer,customUniforms,customAttributes,customUniforms2,customAttributes2,controls;
 
-Units and The Relative Sizes of Objects
+function init() {
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 7000 );
+  clock = new THREE.Clock();
+  delta = clock.getDelta();
 
-In the data, a stars mass and radius is measured in solar units.
+  renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild(renderer.domElement);
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-A planet's mass and radius is measured in Earth Units.
+  // var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+  // scene.add( light );
 
-Distances in the System like the semi-major axis are expressed in
-AU, astronomical units.
+  // star
+  var geometry = new THREE.SphereGeometry(UNITS.STELLAR,32,32);
+  // var material = new THREE.MeshLambertMaterial( { color: starColor, emissive: starColor } );
+  var material = new THREE.MeshBasicMaterial( { color: starColor } );
+  var star = new THREE.Mesh( geometry, material );
+  scene.add( star );
 
-1 Solar Radius = 110 Earth Radius
-1 Solar Radius = 0.0046491 AU
-1 Solar Mass = 333,060 Earth Mass
+  // fadeoff
+  var fadeoffMaterial = new THREE.SpriteMaterial({
+    map: TEXTURES.FADEOFF,
+    color: starColor,
+    useScreenCoordinates: false,
+    alignment: THREE.SpriteAlignment.center,
+    transparent: false,
+    blending: THREE.AdditiveBlending,
+    opacity: 0.7
+  });
+  var fadeoffSprite = new THREE.Sprite(fadeoffMaterial);
+  fadeoffSprite.scale.set(UNITS.STELLAR * 8, UNITS.STELLAR * 8, 1.0);
+  star.add(fadeoffSprite);
 
-In the graphics rendering all units will be the arbitrary unit,
-Helios Unit (HU). This is in reference to size alone, does not refer
-to mass or luminosity
+  // corona
+  var coronaSpriteMaterial = new THREE.SpriteMaterial({
+    map: TEXTURES.CORONA,
+    color: starColor,
+    useScreenCoordinates: false,
+    alignment: THREE.SpriteAlignment.center,
+    transparent: false,
+    blending: THREE.AdditiveBlending
+  });
+  // coronaSprite.scale.x = coronaSprite.scale.y = UNITS.STELLAR * 2;
+  var coronaSprite = new THREE.Sprite(coronaSpriteMaterial);
+  coronaSprite.scale.set(UNITS.STELLAR * 4, UNITS.STELLAR * 4, 1.0);
+  star.add(coronaSprite);
+  var cs2 = new THREE.Sprite(coronaSpriteMaterial);
+  cs2.scale.set(UNITS.STELLAR * 4, UNITS.STELLAR * 4, 1.0);
+  star.add(cs2);
 
-1 Solar Unit = 100 HU
-1 Earth Unit = 4 HU
-White Dwarf = 1 HU
+
+  // Particles
+  customUniforms = {
+    time: {type: 'f', value: 1.0},
+    texture: {type: 't', value: TEXTURES.NEBULA_PARTICLE}
+  };
+
+  customAttributes = {
+    customColor: { type: 'c', value: [] },
+    customFrequency: { type: 'f', value: [] }
+  };
+  // Particles
+  customUniforms2 = {
+    time: {type: 'f', value: 1.0},
+    texture: {type: 't', value: TEXTURES.GLOW_PARTICLE}
+  };
+
+  customAttributes2 = {
+    customColor: { type: 'c', value: [] },
+    customFrequency: { type: 'f', value: [] }
+  };
+
+  // var particleGeometry = new THREE.SphereGeometry(100,16,16);
+  // assign values to attributes, one for each vertex of the geometry
+  // console.log(particleGeometry.vertices.length);
+  // for( var v = 0; v < particleGeometry.vertices.length; v++ )
+  // {
+  //   customAttributes.customColor.value[ v ] = new THREE.Color(starColor);
+  //   customAttributes.customFrequency.value[ v ] = 5 * Math.random() + 0.5;
+  // }
+
+  var particleGeometry = new THREE.Geometry();
+  var particleGeometry2 = new THREE.Geometry();
+  var particleCount = 175;
+  var theta, u, rad;
+  var theta2, u2;
+  for(var i = 0 ; i < particleCount ; i++) {
+    theta = Math.random() * Math.PI * 2;
+    u = Math.random() * 2 - 1;
+    theta2 = Math.random() * Math.PI * 2;
+    u2 = Math.random() * 2 - 1;
+    rad = UNITS.STELLAR;
+
+    var px = rad * Math.sqrt(1-u * u) * Math.cos(theta);
+    var py = rad * Math.sqrt(1-u * u) * Math.sin(theta);
+    var pz = rad * u;
+    var particle = new THREE.Vector3(px, py, pz);
+    particleGeometry.vertices.push(particle);
+
+    var px2 = rad * Math.sqrt(1-u2 * u2) * Math.cos(theta2);
+    var py2 = rad * Math.sqrt(1-u2 * u2) * Math.sin(theta2);
+    var pz2 = rad * u2;
+    var particle2 = new THREE.Vector3(px2, py2, pz2);
+    particleGeometry2.vertices.push(particle2);
+
+    customAttributes.customColor.value[i] = new THREE.Color(starColor);
+    customAttributes.customFrequency.value[ i ] = 6 * Math.random() + 0.5;
+
+    customAttributes2.customColor.value[i] = new THREE.Color(starColor);
+    customAttributes2.customFrequency.value[ i ] = 6 * Math.random() + 0.5;
+  }
+
+  var shaderMaterial = new THREE.ShaderMaterial({
+    uniforms: customUniforms,
+    attributes: customAttributes,
+    vertexShader: document.getElementById('vertexshader').textContent,
+    fragmentShader: document.getElementById('fragmentshader').textContent,
+    transparent: true,
+    alphaTest: 0.5,
+    depthTest: false,
+    blending: THREE.AdditiveBlending
+  });
+  var shaderMaterial2 = new THREE.ShaderMaterial({
+    uniforms: customUniforms2,
+    attributes: customAttributes2,
+    vertexShader: document.getElementById('vertexshader2').textContent,
+    fragmentShader: document.getElementById('fragmentshader2').textContent,
+    transparent: true,
+    alphaTest: 0.5,
+    depthTest: false,
+    blending: THREE.AdditiveBlending
+  });
 
 
-1 AU = 21509 HU <-- This is what needs to be scaled appropriately
-                    Some planets, may be really close, while others
-                    very far away. So the scale needs to be non-linear
-100 AU  = 50000 HU
- 10 AU  = 30000 HU
-  1 AU  = 10000 HU
-.01 AU  = 500 HU
-=================================================================*/
+  var particleSphere = new THREE.ParticleSystem(particleGeometry, shaderMaterial);
+  particleSphere.dynamic = true;
+  scene.add(particleSphere);
 
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  var particleSphere2 = new THREE.ParticleSystem(particleGeometry2, shaderMaterial2);
+  particleSphere2.dynamic = true;
+  scene.add(particleSphere2);
+  // star.scale.set(1.5, 1.5, 1.5);
+  // particleSphere2.scale.set(1.5, 1.5, 1.5);
+  // particleSphere.scale.set(1.5, 1.5, 1.5);
 
-var renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild(renderer.domElement);
 
-var geometry = new THREE.CubeGeometry(1,1,1);
-var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-var cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+  camera.position.z = 300;
+  camera.lookAt(scene.position);
 
-camera.position.z = 5;
+
+  var imagePrefix = "images/dawnmountain-";
+  var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+  var imageSuffix = ".png";
+  var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
+
+  var materialArray = [];
+  for (var i = 0; i < 6; i++)
+    materialArray.push( new THREE.MeshBasicMaterial({
+      map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+      side: THREE.BackSide
+    }));
+  // var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+  var skyMaterial = new THREE.MeshBasicMaterial({color: 0x0B1317, side: THREE.BackSide});
+  var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+  scene.add( skyBox );
+  render();
+}
+
+var camTheta = 0,
+    camPhi = 0,
+    r = 500;
 
 function render() {
-  cube.rotation.x += 0.1;
-  cube.rotation.y += 0.1;
+  delta = clock.getDelta();
+  var ti = clock.getElapsedTime();
+  customUniforms.time.value = ti;
+  customUniforms2.time.value = ti;
+  // camTheta += .005;
+  // camPhi += 0.001;
+  // camera.position.x = Math.cos(camTheta) * Math.sin(camPhi) * r;
+  // camera.position.z = Math.sin(camTheta) * Math.sin(camPhi) * r;
+  // camera.position.y = Math.cos(camPhi) * r;
+  // console.log(camera.position);
+  controls.update();
+  camera.lookAt(scene.position);
   requestAnimationFrame(render);
   renderer.render(scene, camera);
 }
-render()
-
-
-/*
-What needs to happen in order to render these stars
-
-Start with only drawing 1 star for the moment, When this is done
-move into drawing both stars
-
-1. Get scales correct
-2. Draw star at scale
-3. Draw planetary orbits. (Calculate the ellipse)
-4. Draw planets at scale on orbits
-5. Animate planetary positions according to orbit
-6. Animate planetary velocity according to keplers laws
-7. Draw star according to temp/color
-8. Particles and Textures for stars, Shader
-9. Generate Skybox
-10. Generate planet texture
-11. Animate between systems
-
-
- */
+init()
