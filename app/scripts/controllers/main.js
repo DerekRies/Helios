@@ -16,11 +16,13 @@ angular.module('HeliosApp')
     $scope.filters = {
       'composition_class': {
         'type': 'equality',
+        'target': 'system',
         'val': undefined,
         'active': false
       },
       'distance': {
         'type': 'inequality',
+        'target': 'system',
         'active': true,
         'minVal': 0,
         'maxVal': 10,
@@ -28,6 +30,7 @@ angular.module('HeliosApp')
       },
       'num_planets': {
         'type': 'inequality',
+        'target': 'system',
         'active': true,
         'minVal': 0,
         'maxVal': 7,
@@ -35,19 +38,22 @@ angular.module('HeliosApp')
       },
       'dec': {
         'type': 'inequality',
+        'target': 'system',
         'active': false,
         'minVal': 0,
         'maxVal': 50
       },
-      'ra': {
+      'radius': {
         'type': 'inequality',
-        'active': true,
+        'target': 'star',
+        'active': false,
         'minVal': 0,
-        'maxVal': 22.8869,
-        'cap': 22.8869
+        'maxVal': 50,
+        'cap': 50
       },
       'num_stars': {
         'type': 'equality',
+        'target': 'system',
         'val': 1,
         'active': false
       }

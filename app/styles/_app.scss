@@ -42,6 +42,24 @@
             z-index: 2;
         }
 
+        .filter-toggle-button{
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            left: 0;
+            top: 0;
+            text-align: center;
+            font-size: 2em;
+            line-height: 60px;
+            color: white;
+            border: 0;
+            background: 0;
+            z-index: 5;
+            &:focus{
+                outline: none;
+            }
+        }
+
         .block{
             width: 40%;
             height: 60px;
@@ -88,7 +106,7 @@
             }
         }
         .actions{
-            width: 9.9%;
+            width: 5%;
             height: 61px;
             float: left;
             position: relative;
@@ -114,7 +132,7 @@
             }
 
             .button{
-                width: 50%;
+                width: 100%;
                 height: 100%;
                 float: left;
                 position: relative;
@@ -174,7 +192,7 @@
                 background: url('../img/icon-menu-exit.svg') no-repeat center !important;
             }
             .search{
-                background: url('../img/icon-search.svg') no-repeat center;
+                background: url('../img/icon-search.svg') no-repeat center left;
             }
         }
         .data{
@@ -309,7 +327,7 @@
             //     border-right: 1px solid #ccc;
             // }
             .noUi-base{
-                width: 220px;
+                width: 240px;
                 height: 4px;
                 margin-left: 5px;
                 box-shadow: none;
