@@ -2,15 +2,15 @@
 
 angular.module('HeliosApp')
   .controller('MainCtrl',
-           ['$scope', '$log', 'Kepler', 'heliosUtils', '$timeout',
-   function ($scope,   $log,   Kepler,   utils, $timeout) {
+           ['$scope', '$log', 'Kepler', 'heliosUtils', '$timeout', '$location',
+   function ($scope,   $log,   Kepler,   utils, $timeout, $location) {
 
-    $scope.menuState = $scope.sidebarState = true;
+    // $scope.menuState = $scope.sidebarState = true;
 
-    $scope.numStars = [
-      {val: 1},
-      {val: 2}
-    ];
+    // $scope.numStars = [
+    //   {val: 1},
+    //   {val: 2}
+    // ];
 
     $scope.filteredSystems = [];
     $scope.filters = {
@@ -67,6 +67,11 @@ angular.module('HeliosApp')
 
     $scope.toggleSidebar = function () {
       $scope.sidebarState = !$scope.sidebarState;
+    };
+
+    $scope.goToSystem = function (system) {
+      $location.path('/system/' + system.name);
+      $scope.toggleMenu();
     };
 
     Kepler.getSystems()
