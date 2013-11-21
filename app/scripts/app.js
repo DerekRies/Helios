@@ -7,8 +7,12 @@ angular.module('HeliosApp', [
   .config(function ($routeProvider, $logProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/welcome.html',
+        controller: 'WelcomeCtrl'
+      })
+      .when('/system/:id', {
+        templateUrl: 'views/system.html',
+        controller: 'SystemCtrl'
       })
       .otherwise({
         redirectTo: '/'
