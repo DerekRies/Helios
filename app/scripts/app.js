@@ -4,7 +4,7 @@ angular.module('HeliosApp', [
     'ngRoute',
     'ngAnimate'
   ])
-  .config(function ($routeProvider, $logProvider) {
+  .config(['$routeProvider', '$logProvider', function ($routeProvider, $logProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/welcome.html',
@@ -19,4 +19,4 @@ angular.module('HeliosApp', [
       });
 
     $logProvider.debugEnabled(true);
-  });
+  }]);

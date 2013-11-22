@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('HeliosApp')
-  .directive('nouislider', ['$parse', function ($parse) {
+  .directive('nouislider', [function () {
     return {
       restrict: 'A',
       scope: {
@@ -11,7 +11,6 @@ angular.module('HeliosApp')
         'rangeMin': '='
       },
       link: function postLink(scope, element, attrs) {
-        console.log(scope.startMax, scope.startMin);
         element.noUiSlider({
              range: [scope.rangeMin,scope.rangeMax]
             ,start: [scope.startMin,scope.startMax]
@@ -21,7 +20,6 @@ angular.module('HeliosApp')
                 scope.startMin = parseFloat(vals[0],10);
                 scope.startMax = parseFloat(vals[1],10);
             });
-            console.log(scope);
         });
 
       }

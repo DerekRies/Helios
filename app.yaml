@@ -27,9 +27,31 @@ skip_files:
 - ^(.*)\.scss$
 
 handlers:
+- url: /img/(.*\.(gif|png|jpg|mp4|ogv|webm|svg))
+  static_files: dist/img/\1
+  upload: dist/img/(.*\.(gif|png|jpg|mp4|ogv|webm|svg))
+
+- url: ../img/(.*\.(gif|png|jpg|mp4|ogv|webm|svg))
+  static_files: dist/img/\1
+  upload: dist/img/(.*\.(gif|png|jpg|mp4|ogv|webm|svg))
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
+
+- url: /scripts
+  mime_type: text/javascript
+  static_dir: dist/scripts
+
+- url: /bower_components
+  static_dir: dist/bower_components
+
+- url: /views
+  static_dir: dist/views
+
+- url: /styles
+  mime_type: text/css
+  static_dir: dist/styles
 
 # Runs the storage script to download new data and store it with NDB
 - url: /_storeit(.*)
@@ -41,8 +63,8 @@ handlers:
 
 # Everything else is served through the Single Page Application
 - url: .*
-  static_files: index.html
-  upload: index.html
+  static_files: dist/index.html
+  upload: dist/index.html
 
 libraries:
 - name: webapp2

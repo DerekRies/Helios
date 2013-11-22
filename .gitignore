@@ -6,5 +6,6 @@ app/bower_components
 *.pyc
 kepler/confirmed.json
 kepler/total.json
+app/scripts/total.json
 requests/*
 img/
