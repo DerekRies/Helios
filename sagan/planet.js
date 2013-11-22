@@ -11,7 +11,7 @@ var Planet = function(planetData){
   this.drawable = new THREE.Mesh(this._geometry, this._material);
   this.theta = Math.random() * Math.PI * 2;
 
-  this.orbitShape = this.makeOrbitShape(120);
+  this.orbitShape = this.makeOrbitShape(64);
   this.orbit = this.drawShape(this.orbitShape, 0xffffff, 0, 0, 0, (Math.PI / 180) * 90, 0, 0, 1 );
   // this.orbit.opacity = 0.5;
 };
@@ -38,7 +38,7 @@ Planet.prototype.makeOrbitShape = function(segments) {
 
 Planet.prototype.drawShape = function(shape, color, x, y, z, rx, ry, rz, s) {
   var geometry = shape.createPointsGeometry();
-  var material = new THREE.LineBasicMaterial( { linewidth: 1, color: color, transparent: true, opacity: 0.3 } );
+  var material = new THREE.LineBasicMaterial( { linewidth: 2, color: color, transparent: true, opacity: 0.5 } );
 
   var orbit = new THREE.Line( geometry, material );
   orbit.position.set( x, y, z );
@@ -47,9 +47,12 @@ Planet.prototype.drawShape = function(shape, color, x, y, z, rx, ry, rz, s) {
   return orbit;
 };
 
-Planet.prototype.update = function() {
-  var dt = window.Helios.clock.getDelta();
-  this.theta += dt * 1000;
+Planet.prototype.disableOrbitLines = function() {
+  this.orbit.visible = false;
+};
+
+Planet.prototype.update = function(dt) {
+  this.theta += dt * 1;
   var x = Math.cos(this.theta) * this.orbitRadius;
   var z = Math.sin(this.theta) * this.orbitRadius;
   this.drawable.position.set(x, 0, z);

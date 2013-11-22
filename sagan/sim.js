@@ -21,7 +21,8 @@ Sim.prototype.init = function() {
   document.body.appendChild(this.renderer.domElement);
   this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
   this.makeSkybox();
-  this.camera.position.z = 700;
+  this.camera.position.z = 500;
+  this.camera.position.y = 300;
   this.camera.lookAt(this.scene.position);
 };
 
@@ -33,17 +34,20 @@ Sim.prototype.makeSkybox = function() {
 };
 
 Sim.prototype.updateSystem = function() {
+  var dt = this.clock.getDelta();
   if(typeof this.star !== 'undefined') {
-    this.star.update();
+    this.star.update(dt);
   }
   if(typeof this.planets !== 'undefined') {
     for(var i = 0; i < this.planets.length ; i++) {
-      this.planets[i].update();
+      this.planets[i].update(dt);
     }
   }
 };
 
 Sim.prototype.tick = function() {
+  // this.camTheta += 0.05;
+  // this.camPhi += 0.05;
   this.controls.update();
   this.updateSystem();
   this.renderer.render(this.scene, this.camera);
@@ -85,7 +89,10 @@ Sim.prototype.makePlanets = function(planets) {
   }
 };
 
-Sim.prototype.toggleOrbitLines = function() {
+Sim.prototype.disableOrbitLines = function() {
+  for(var i = 0; i < this.planets.length ; i++) {
+    this.planets[i].disableOrbitLines();
+  }
 };
 
 window.Helios.Sim = Sim;

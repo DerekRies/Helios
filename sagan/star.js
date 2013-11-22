@@ -136,7 +136,7 @@ var Star = function () {
   this.drawable.add(this._light);
 }
 
-Star.prototype.update = function() {
+Star.prototype.update = function(dt) {
   var ti = window.Helios.clock.getElapsedTime();
   this.customUniforms.time.value = ti;
   this.customUniforms2.time.value = ti;
