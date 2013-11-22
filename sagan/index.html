@@ -1,0 +1,722 @@
+<html>
+  <head>
+    <title>Sagan - Graphics Module</title>
+    <style>
+    html,body {
+      margin: 0;
+      padding: 0;
+    }
+    </style>
+  </head>
+  <body>
+<script src="../app/bower_components/threejs/build/three.js"></script>
+<script src="orbitcontrols.js"></script>
+
+
+<script type="x-shader/x-vertex" id="vertexshader">
+  uniform float time;
+  attribute float customFrequency;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+  void main()
+  {
+    vColor = customColor; // set color associated to vertex; use later in fragment shader
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // option (1): draw particles at constant size on screen
+    // gl_PointSize = 100.0;
+      // option (2): scale particles as objects in 3D space
+    gl_PointSize = (16.0 + sin( customFrequency * time )) * 8.0 * ( 300.0 / length( mvPosition.xyz ) );
+    gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+
+<script type="x-shader/x-vertex" id="vertexshader2">
+  uniform float time;
+  attribute float customFrequency;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+  void main()
+  {
+    vColor = customColor; // set color associated to vertex; use later in fragment shader
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // option (1): draw particles at constant size on screen
+    // gl_PointSize = 100.0;
+      // option (2): scale particles as objects in 3D space
+    gl_PointSize = (16.0 + sin( customFrequency * time )) * 6.0 * ( 300.0 / length( mvPosition.xyz ) );
+    gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+  uniform sampler2D texture;
+  varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+  void main()
+  {
+    // calculates a color for the particle
+    gl_FragColor = vec4( vColor, 1.0 );
+    // sets particle texture to desired color
+    gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+  }
+</script>
+
+
+<script type="x-shader/x-fragment" id="fragmentshader2">
+  uniform sampler2D texture;
+  varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+  void main()
+  {
+    // calculates a color for the particle
+    gl_FragColor = vec4( vColor, 1.0 );
+    // sets particle texture to desired color
+    gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+  }
+</script>
+
+
+
+
+    <script src="../app/bower_components/lodash/dist/lodash.js"></script>
+    <script>
+      window.systems = {
+        "HD 4308": {
+            "distance": 21.9,
+            "num_stars": 1,
+            "planets": [
+                {
+                    "mass_class": "Neptunian",
+                    "kepler_name": "",
+                    "period": 15.61,
+                    "hz_comp": 2.62,
+                    "sph": 0.0,
+                    "disc_year": 2005,
+                    "max_eq_temp": 806.5,
+                    "radius": 3.81,
+                    "atmosphere_class": "metals-rich",
+                    "habitable": false,
+                    "escape_velocity": 1.84,
+                    "composition_class": "gas",
+                    "star_name": "HD 4308",
+                    "density": 0.23,
+                    "gravity": 0.89,
+                    "hz_dist": -2.1,
+                    "hab_moon_candidate": false,
+                    "mean_eq_temp": 685.9,
+                    "max_surface_temp": 0.0,
+                    "min_eq_temp": 611.5,
+                    "esi": 0.26,
+                    "surface_pressure": 3.0,
+                    "hz_index": 0.23,
+                    "hz_atmosphere": -0.39,
+                    "koi_name": "",
+                    "confirmed": true,
+                    "habitable_class": "non-habitable",
+                    "eccentricity": 0.27,
+                    "disc_method": "detected by radial velocity",
+                    "omega": 0.0,
+                    "min_surface_temp": 0.0,
+                    "int_esi": 0.0,
+                    "name": "HD 4308 b",
+                    "semi_major_axis": 0.118,
+                    "mass": 12.88,
+                    "zone_class": "Hot",
+                    "mean_surface_temp": 0.0,
+                    "surface_esi": 0.0,
+                    "inclination": 0.0
+                }
+            ],
+            "semimajor_axis": 0,
+            "period": 0,
+            "habzone_max": 1.616,
+            "habzone_min": 0.653,
+            "num_planets": 1,
+            "ra": 0.7442,
+            "stars": [
+                {
+                    "name": "HD 4308",
+                    "classification": "G5 V",
+                    "luminosity": 0.745224,
+                    "age": 7.1,
+                    "hip_name": "HIP 3497",
+                    "size_from_planet": 4.3162,
+                    "metallicity": -0.34,
+                    "magnitude": 6.5,
+                    "radius": 0.92,
+                    "mag_from_planet": -31.2,
+                    "hd_name": "HD 4308",
+                    "mass": 0.85,
+                    "constellation": "Tuc",
+                    "temperature": 5597.0
+                }
+            ],
+            "eccentricity": 0,
+            "dec": -65.6494,
+            "inclination": 0
+        },
+        "KOI-4495": {
+            "distance": 1130.12,
+            "num_stars": 1,
+            "planets": [
+                {
+                    "mass_class": "Superterran",
+                    "kepler_name": "",
+                    "period": 5.93,
+                    "hz_comp": -0.01,
+                    "sph": 0.0,
+                    "disc_year": 2012,
+                    "max_eq_temp": 962.3,
+                    "radius": 1.5,
+                    "atmosphere_class": "metals-rich",
+                    "habitable": false,
+                    "escape_velocity": 1.41,
+                    "composition_class": "rocky-iron",
+                    "star_name": "KOI-4495",
+                    "density": 0.89,
+                    "gravity": 1.33,
+                    "hz_dist": -2.23,
+                    "hab_moon_candidate": false,
+                    "mean_eq_temp": 962.3,
+                    "max_surface_temp": 1000.5,
+                    "min_eq_temp": 962.3,
+                    "esi": 0.29,
+                    "surface_pressure": 2.7,
+                    "hz_index": 0.3,
+                    "hz_atmosphere": -0.85,
+                    "koi_name": "4495.01",
+                    "confirmed": false,
+                    "habitable_class": "non-habitable",
+                    "eccentricity": 0.0,
+                    "disc_method": "tran",
+                    "omega": 0.0,
+                    "min_surface_temp": 1000.5,
+                    "int_esi": 0.0,
+                    "name": "KOI-4495.01",
+                    "semi_major_axis": 0.0652,
+                    "mass": 3.0,
+                    "zone_class": "Hot",
+                    "mean_surface_temp": 1000.5,
+                    "surface_esi": 0.0,
+                    "inclination": 86.0
+                }
+            ],
+            "semimajor_axis": 0,
+            "period": 0,
+            "habzone_max": 1.74,
+            "habzone_min": 0.703,
+            "num_planets": 1,
+            "ra": 19.7849,
+            "stars": [
+                {
+                    "name": "KOI-4495",
+                    "classification": "G",
+                    "luminosity": 0.865632,
+                    "age": 0.0,
+                    "hip_name": "",
+                    "size_from_planet": 8.0893,
+                    "metallicity": 0.0,
+                    "magnitude": 15.5,
+                    "radius": 0.99,
+                    "mag_from_planet": -32.5,
+                    "hd_name": "",
+                    "mass": 1.05,
+                    "constellation": "Cyg",
+                    "temperature": 5604.2
+                }
+            ],
+            "eccentricity": 0,
+            "dec": 40.7933,
+            "inclination": 0
+        },
+        "KOI-3554": {
+            "distance": 1024.37,
+            "num_stars": 1,
+            "planets": [
+                {
+                    "mass_class": "Jovian",
+                    "kepler_name": "",
+                    "period": 394.67,
+                    "hz_comp": 35.93,
+                    "sph": 0.0,
+                    "disc_year": 2012,
+                    "max_eq_temp": 243.1,
+                    "radius": 40.86,
+                    "atmosphere_class": "hydrogen-rich",
+                    "habitable": false,
+                    "escape_velocity": 4.67,
+                    "composition_class": "gas",
+                    "star_name": "KOI-3554",
+                    "density": 0.01,
+                    "gravity": 0.53,
+                    "hz_dist": -0.35,
+                    "hab_moon_candidate": true,
+                    "mean_eq_temp": 243.1,
+                    "max_surface_temp": 0.0,
+                    "min_eq_temp": 243.1,
+                    "esi": 0.32,
+                    "surface_pressure": 11.7,
+                    "hz_index": 0.03,
+                    "hz_atmosphere": 4.06,
+                    "koi_name": "3554.01",
+                    "confirmed": false,
+                    "habitable_class": "non-habitable",
+                    "eccentricity": 0.0,
+                    "disc_method": "tran",
+                    "omega": 0.0,
+                    "min_surface_temp": 0.0,
+                    "int_esi": 0.0,
+                    "name": "KOI-3554.01",
+                    "semi_major_axis": 1.0431,
+                    "mass": 891.71,
+                    "zone_class": "Warm",
+                    "mean_surface_temp": 0.0,
+                    "surface_esi": 0.0,
+                    "inclination": 90.0
+                }
+            ],
+            "semimajor_axis": 0,
+            "period": 0,
+            "habzone_max": 1.738,
+            "habzone_min": 0.71,
+            "num_planets": 1,
+            "ra": 19.0401,
+            "stars": [
+                {
+                    "name": "KOI-3554",
+                    "classification": "G",
+                    "luminosity": 0.901776,
+                    "age": 0.0,
+                    "hip_name": "",
+                    "size_from_planet": 0.4716,
+                    "metallicity": 0.0,
+                    "magnitude": 15.2,
+                    "radius": 0.92,
+                    "mag_from_planet": -26.5,
+                    "hd_name": "",
+                    "mass": 0.97,
+                    "constellation": "Lyr",
+                    "temperature": 5860.7
+                }
+            ],
+            "eccentricity": 0,
+            "dec": 41.8175,
+            "inclination": 0
+        },
+        "WTS-2": {
+            "distance": 1000.0,
+            "num_stars": 1,
+            "planets": [
+                {
+                    "mass_class": "Jovian",
+                    "kepler_name": "",
+                    "period": 1.02,
+                    "hz_comp": 10.44,
+                    "sph": 0.0,
+                    "disc_year": 2013,
+                    "max_eq_temp": 1412.1,
+                    "radius": 14.56,
+                    "atmosphere_class": "hydrogen-rich",
+                    "habitable": false,
+                    "escape_velocity": 5.31,
+                    "composition_class": "gas",
+                    "star_name": "WTS-2",
+                    "density": 0.13,
+                    "gravity": 1.94,
+                    "hz_dist": -2.24,
+                    "hab_moon_candidate": false,
+                    "mean_eq_temp": 1412.1,
+                    "max_surface_temp": 0.0,
+                    "min_eq_temp": 1412.1,
+                    "esi": 0.06,
+                    "surface_pressure": 54.8,
+                    "hz_index": 0.09,
+                    "hz_atmosphere": 1.0,
+                    "koi_name": "",
+                    "confirmed": true,
+                    "habitable_class": "non-habitable",
+                    "eccentricity": 0.0,
+                    "disc_method": "detected by transit",
+                    "omega": 0.0,
+                    "min_surface_temp": 0.0,
+                    "int_esi": 0.0,
+                    "name": "WTS-2 b",
+                    "semi_major_axis": 0.0186,
+                    "mass": 411.18,
+                    "zone_class": "Hot",
+                    "mean_surface_temp": 0.0,
+                    "surface_esi": 0.0,
+                    "inclination": 60.0
+                }
+            ],
+            "semimajor_axis": 0,
+            "period": 0,
+            "habzone_max": 1.123,
+            "habzone_min": 0.441,
+            "num_planets": 1,
+            "ra": 0.0,
+            "stars": [
+                {
+                    "name": "WTS-2",
+                    "classification": "K3V",
+                    "luminosity": 0.324743,
+                    "age": 0.6,
+                    "hip_name": "",
+                    "size_from_planet": 21.9973,
+                    "metallicity": 0.2,
+                    "magnitude": 0.0,
+                    "radius": 0.76,
+                    "mag_from_planet": -34.2,
+                    "hd_name": "",
+                    "mass": 0.82,
+                    "constellation": "Psc",
+                    "temperature": 5000.0
+                }
+            ],
+            "eccentricity": 0,
+            "dec": 0.0,
+            "inclination": 0
+        },
+        "HD 107148": {
+            "distance": 51.3,
+            "num_stars": 1,
+            "planets": [
+                {
+                    "mass_class": "Jovian",
+                    "kepler_name": "",
+                    "period": 48.06,
+                    "hz_comp": 7.48,
+                    "sph": 0.0,
+                    "disc_year": 2006,
+                    "max_eq_temp": 551.4,
+                    "radius": 9.57,
+                    "atmosphere_class": "metals-rich",
+                    "habitable": false,
+                    "escape_velocity": 2.64,
+                    "composition_class": "gas",
+                    "star_name": "HD 107148",
+                    "density": 0.08,
+                    "gravity": 0.73,
+                    "hz_dist": -1.96,
+                    "hab_moon_candidate": false,
+                    "mean_eq_temp": 537.4,
+                    "max_surface_temp": 0.0,
+                    "min_eq_temp": 524.5,
+                    "esi": 0.23,
+                    "surface_pressure": 5.1,
+                    "hz_index": 0.11,
+                    "hz_atmosphere": 0.47,
+                    "koi_name": "",
+                    "confirmed": true,
+                    "habitable_class": "non-habitable",
+                    "eccentricity": 0.05,
+                    "disc_method": "detected by radial velocity",
+                    "omega": 0.0,
+                    "min_surface_temp": 0.0,
+                    "int_esi": 0.0,
+                    "name": "HD 107148 b",
+                    "semi_major_axis": 0.269,
+                    "mass": 66.77,
+                    "zone_class": "Hot",
+                    "mean_surface_temp": 0.0,
+                    "surface_esi": 0.0,
+                    "inclination": 0.0
+                }
+            ],
+            "semimajor_axis": 0,
+            "period": 0,
+            "habzone_max": 2.202,
+            "habzone_min": 0.898,
+            "num_planets": 1,
+            "ra": 12.3203,
+            "stars": [
+                {
+                    "name": "HD 107148",
+                    "classification": "G5",
+                    "luminosity": 1.432962,
+                    "age": 5.6,
+                    "hip_name": "HIP 60081",
+                    "size_from_planet": 2.3673,
+                    "metallicity": 0.314,
+                    "magnitude": 8.0,
+                    "radius": 1.19,
+                    "mag_from_planet": -30.0,
+                    "hd_name": "HD 107148",
+                    "mass": 1.12,
+                    "constellation": "Vir",
+                    "temperature": 5797.0
+                }
+            ],
+            "eccentricity": 0,
+            "dec": -3.3197,
+            "inclination": 0
+        },
+        "KOI-2220": {
+        "distance": 895.17,
+        "num_stars": 1,
+        "planets": [
+            {
+                "mass_class": "Terran",
+                "kepler_name": "",
+                "period": 3.28,
+                "hz_comp": -0.22,
+                "sph": 0.0,
+                "disc_year": 2012,
+                "max_eq_temp": 1246.7,
+                "radius": 1.19,
+                "atmosphere_class": "no-atmosphere",
+                "habitable": false,
+                "escape_velocity": 1.17,
+                "composition_class": "rocky-iron",
+                "star_name": "KOI-2220",
+                "density": 0.97,
+                "gravity": 1.16,
+                "hz_dist": -2.32,
+                "hab_moon_candidate": false,
+                "mean_eq_temp": 1246.7,
+                "max_surface_temp": 1282.7,
+                "min_eq_temp": 1246.7,
+                "esi": 0.29,
+                "surface_pressure": 1.6,
+                "hz_index": 0.28,
+                "hz_atmosphere": -1.09,
+                "koi_name": "2220.01",
+                "confirmed": false,
+                "habitable_class": "non-habitable",
+                "eccentricity": 0.0,
+                "disc_method": "tran",
+                "omega": 0.0,
+                "min_surface_temp": 1282.7,
+                "int_esi": 0.0,
+                "name": "KOI-2220.01",
+                "semi_major_axis": 0.044,
+                "mass": 1.64,
+                "zone_class": "Hot",
+                "mean_surface_temp": 1282.7,
+                "surface_esi": 0.0,
+                "inclination": 85.9
+            },
+            {
+                "mass_class": "Superterran",
+                "kepler_name": "",
+                "period": 5.03,
+                "hz_comp": -0.1,
+                "sph": 0.0,
+                "disc_year": 2012,
+                "max_eq_temp": 1085.9,
+                "radius": 1.38,
+                "atmosphere_class": "metals-rich",
+                "habitable": false,
+                "escape_velocity": 1.33,
+                "composition_class": "rocky-iron",
+                "star_name": "KOI-2220",
+                "density": 0.93,
+                "gravity": 1.28,
+                "hz_dist": -2.3,
+                "hab_moon_candidate": false,
+                "mean_eq_temp": 1085.9,
+                "max_surface_temp": 1123.3,
+                "min_eq_temp": 1085.9,
+                "esi": 0.29,
+                "surface_pressure": 2.3,
+                "hz_index": 0.29,
+                "hz_atmosphere": -0.95,
+                "koi_name": "2220.02",
+                "confirmed": false,
+                "habitable_class": "non-habitable",
+                "eccentricity": 0.0,
+                "disc_method": "tran",
+                "omega": 0.0,
+                "min_surface_temp": 1123.3,
+                "int_esi": 0.0,
+                "name": "KOI-2220.02",
+                "semi_major_axis": 0.058,
+                "mass": 2.43,
+                "zone_class": "Hot",
+                "mean_surface_temp": 1123.3,
+                "surface_esi": 0.0,
+                "inclination": 86.5
+            },
+            {
+                "mass_class": "Terran",
+                "kepler_name": "",
+                "period": 1.9,
+                "hz_comp": -0.23,
+                "sph": 0.0,
+                "disc_year": 2012,
+                "max_eq_temp": 1509.8,
+                "radius": 1.16,
+                "atmosphere_class": "no-atmosphere",
+                "habitable": false,
+                "escape_velocity": 1.15,
+                "composition_class": "rocky-iron",
+                "star_name": "KOI-2220",
+                "density": 0.98,
+                "gravity": 1.14,
+                "hz_dist": -2.35,
+                "hab_moon_candidate": false,
+                "mean_eq_temp": 1509.8,
+                "max_surface_temp": 1545.6,
+                "min_eq_temp": 1509.8,
+                "esi": 0.29,
+                "surface_pressure": 1.5,
+                "hz_index": 0.28,
+                "hz_atmosphere": -1.16,
+                "koi_name": "2220.03",
+                "confirmed": false,
+                "habitable_class": "non-habitable",
+                "eccentricity": 0.0,
+                "disc_method": "tran",
+                "omega": 0.0,
+                "min_surface_temp": 1545.6,
+                "int_esi": 0.0,
+                "name": "KOI-2220.03",
+                "semi_major_axis": 0.03,
+                "mass": 1.53,
+                "zone_class": "Hot",
+                "mean_surface_temp": 1545.6,
+                "surface_esi": 0.0,
+                "inclination": 83.7
+            },
+            {
+                "mass_class": "Terran",
+                "kepler_name": "",
+                "period": 7.66,
+                "hz_comp": -0.27,
+                "sph": 0.0,
+                "disc_year": 2012,
+                "max_eq_temp": 942.3,
+                "radius": 1.1,
+                "atmosphere_class": "no-atmosphere",
+                "habitable": false,
+                "escape_velocity": 1.09,
+                "composition_class": "rocky-iron",
+                "star_name": "KOI-2220",
+                "density": 0.99,
+                "gravity": 1.09,
+                "hz_dist": -2.26,
+                "hab_moon_candidate": false,
+                "mean_eq_temp": 942.3,
+                "max_surface_temp": 977.5,
+                "min_eq_temp": 942.3,
+                "esi": 0.3,
+                "surface_pressure": 1.3,
+                "hz_index": 0.29,
+                "hz_atmosphere": -1.04,
+                "koi_name": "2220.04",
+                "confirmed": false,
+                "habitable_class": "non-habitable",
+                "eccentricity": 0.0,
+                "disc_method": "tran",
+                "omega": 0.0,
+                "min_surface_temp": 977.5,
+                "int_esi": 0.0,
+                "name": "KOI-2220.04",
+                "semi_major_axis": 0.0769,
+                "mass": 1.32,
+                "zone_class": "Hot",
+                "mean_surface_temp": 977.5,
+                "surface_esi": 0.0,
+                "inclination": 88.0
+            },
+            {
+                "mass_class": "Terran",
+                "kepler_name": "",
+                "period": 11.93,
+                "hz_comp": -0.21,
+                "sph": 0.0,
+                "disc_year": 2012,
+                "max_eq_temp": 813.3,
+                "radius": 1.2,
+                "atmosphere_class": "metals-rich",
+                "habitable": false,
+                "escape_velocity": 1.18,
+                "composition_class": "rocky-iron",
+                "star_name": "KOI-2220",
+                "density": 0.97,
+                "gravity": 1.17,
+                "hz_dist": -2.21,
+                "hab_moon_candidate": false,
+                "mean_eq_temp": 813.3,
+                "max_surface_temp": 849.4,
+                "min_eq_temp": 813.3,
+                "esi": 0.3,
+                "surface_pressure": 1.6,
+                "hz_index": 0.29,
+                "hz_atmosphere": -0.93,
+                "koi_name": "2220.05",
+                "confirmed": false,
+                "habitable_class": "non-habitable",
+                "eccentricity": 0.0,
+                "disc_method": "tran",
+                "omega": 0.0,
+                "min_surface_temp": 849.4,
+                "int_esi": 0.0,
+                "name": "KOI-2220.05",
+                "semi_major_axis": 0.1033,
+                "mass": 1.68,
+                "zone_class": "Hot",
+                "mean_surface_temp": 849.4,
+                "surface_esi": 0.0,
+                "inclination": 88.0
+            }
+        ],
+        "semimajor_axis": 0,
+        "period": 0,
+        "habzone_max": 1.902,
+        "habzone_min": 0.783,
+        "num_planets": 5,
+        "ra": 19.6092,
+        "stars": [
+            {
+                "name": "KOI-2220",
+                "classification": "F",
+                "luminosity": 1.110188,
+                "age": 0.0,
+                "hip_name": "",
+                "size_from_planet": 11.7691,
+                "metallicity": 0.0,
+                "magnitude": 14.7,
+                "radius": 0.97,
+                "mag_from_planet": -33.7,
+                "hd_name": "",
+                "mass": 1.04,
+                "constellation": "Cyg",
+                "temperature": 6022.0
+            }
+        ],
+        "eccentricity": 0,
+        "dec": 42.3705,
+        "inclination": 0
+    }
+      }
+    </script>
+    <script src="globals.js"></script>
+    <script src="star.js"></script>
+    <script src="planet.js"></script>
+    <script src="sim.js"></script>
+    <script>
+        var s = new Sim();
+s.init();
+
+function tick() {
+  requestAnimationFrame(tick);
+  s.tick();
+}
+tick();
+// setInterval(function () {
+//   tick();
+// }, 16);
+
+// var si = 0;
+// var systemNames = _.map(systems, function (val, key) {
+//   return key;
+// });
+// setInterval(function () {
+//   si++
+//   s.loadSystem(systems[systemNames[si % systemNames.length]]);
+// }, 3000);
+
+s.loadSystem(systems['WTS-2']);
+    </script>
+  </body>
+</html>
