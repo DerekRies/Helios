@@ -166,15 +166,6 @@
     console.log(c);
     this.customUniforms.starcolor.value = c;
     this.customUniforms2.starcolor.value = c;
-    // console.log('now the diffs');;
-    // console.log(this.customAttributes.customColor.value[0]);
-    // for(var i = 0; i < this.nebulaParticles ; i++) {
-    //   this.customAttributes.customColor.value[i] = c;
-    // }
-    // for(var i = 0; i < this.glowParticles ; i++) {
-    //   this.customAttributes2.customColor.value[i] = c;
-    // }
-    // console.log(this.customAttributes.customColor.value[0]);
   };
 
   Star.prototype.scale = function(n) {
