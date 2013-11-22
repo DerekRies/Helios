@@ -9,7 +9,7 @@
     </style>
   </head>
   <body>
-<script src="../app/bower_components/threejs/build/three.js"></script>
+<script src="/app/bower_components/threejs/build/three.js"></script>
 <script src="orbitcontrols.js"></script>
 
 
@@ -77,7 +77,7 @@
 
 
 
-    <script src="../app/bower_components/lodash/dist/lodash.js"></script>
+    <script src="/app/bower_components/lodash/dist/lodash.js"></script>
     <script>
       window.systems = {
         "HD 4308": {
@@ -695,8 +695,9 @@
     <script src="planet.js"></script>
     <script src="sim.js"></script>
     <script>
-        var s = new Sim();
+        var s = new Helios.Sim();
 s.init();
+s.setRenderTarget(document.body);
 
 function tick() {
   requestAnimationFrame(tick);
@@ -707,16 +708,16 @@ tick();
 //   tick();
 // }, 16);
 
-// var si = 0;
-// var systemNames = _.map(systems, function (val, key) {
-//   return key;
-// });
-// setInterval(function () {
-//   si++
-//   s.loadSystem(systems[systemNames[si % systemNames.length]]);
-// }, 3000);
+var si = 0;
+var systemNames = _.map(systems, function (val, key) {
+  return key;
+});
+setInterval(function () {
+  si++
+  s.loadSystem(systems[systemNames[si % systemNames.length]]);
+}, 3000);
 
-s.loadSystem(systems['WTS-2']);
+// s.loadSystem(systems['WTS-2']);
     </script>
   </body>
 </html>

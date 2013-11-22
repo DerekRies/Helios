@@ -50,18 +50,18 @@ UNITS.convertAUtoThreeUnits = function (n) {
   return ((Math.pow(n, 1/5) * 1000) - 300);
 };
 
-var f = UNITS.convertPlanetUnitsToThreeUnits;
-console.log(f(.1));
-console.log(f(1));
-console.log(f(10));
-console.log(f(100));
+// var f = UNITS.convertPlanetUnitsToThreeUnits;
+// console.log(f(.1));
+// console.log(f(1));
+// console.log(f(10));
+// console.log(f(100));
 
 
 var TEXTURES = {};
-TEXTURES.CORONA = THREE.ImageUtils.loadTexture('images/corona.png');
-TEXTURES.FADEOFF = THREE.ImageUtils.loadTexture('images/fadeoff.png');
-TEXTURES.GLOW_PARTICLE = THREE.ImageUtils.loadTexture('images/glow.png');
-TEXTURES.NEBULA_PARTICLE = THREE.ImageUtils.loadTexture('images/nebula2.png');
+TEXTURES.CORONA = THREE.ImageUtils.loadTexture('../../img/corona.png');
+TEXTURES.FADEOFF = THREE.ImageUtils.loadTexture('../../img/fadeoff.png');
+TEXTURES.GLOW_PARTICLE = THREE.ImageUtils.loadTexture('../../img/glow.png');
+TEXTURES.NEBULA_PARTICLE = THREE.ImageUtils.loadTexture('../../img/nebula2.png');
 
 window.UNITS = UNITS;
 window.TEXTURES = TEXTURES;

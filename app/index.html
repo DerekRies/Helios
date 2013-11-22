@@ -37,7 +37,7 @@
 
           <header id="controls">
               <div class="location block">
-                  <p ng-hide="menuState"><strong>MILKY WAY /</strong> THE SUN / PLANETS</p>
+                  <p ng-hide="menuState"><strong>{{activeSystem.name}} /</strong> {{activeSystem.num_planets}} PLANETS</p>
                   <a class="filter-toggle-button" ng-show="menuState" ng-click="toggleSidebar()">
                     <span class="fade" ng-hide="sidebarState"><i class="fa fa-list"></i> FILTER SYSTEMS</span>
                     <span class="fade" ng-show="sidebarState"><i class="fa fa-times close"></i></span>
@@ -53,13 +53,13 @@
           </header>
           <!-- Systems Block -->
           <section id="bottom" class="delay fade" ng-show="menuState">
-              <div class="system" style="transition-delay: {{ $index * 15 }}ms" ng-repeat="system in filteredSystems | orderBy: 'num_planets': true | filter:query | limitTo: 50">
+              <div class="system" ng-repeat="system in filteredSystems | orderBy: 'num_planets': true | filter:query | limitTo: 50">
                   <div class="render {{system.styleClassName}}" ng-click="goToSystem(system)">
                       <div class="planet-count">
                           {{ system.num_planets }}
                       </div>
                   </div>
-                  <span>{{ system.name }}</span>
+                  <span>{{ system.name }} | {{system.styleClassName}}</span>
               </div>
               <!-- Filters Sidebar -->
               <div class="filters-sidebar ease-in-out" ng-class="{'filters-sidebar-open': sidebarState}">
@@ -123,26 +123,86 @@
       </div><!-- END: Nav Bar -->
     </div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
+<script type="x-shader/x-vertex" id="vertexshader">
+  uniform float time;
+  uniform float scalesize;
+  attribute float customFrequency;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+  void main()
+  {
+    vColor = customColor; // set color associated to vertex; use later in fragment shader
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // option (1): draw particles at constant size on screen
+    // gl_PointSize = 100.0;
+      // option (2): scale particles as objects in 3D space
+    gl_PointSize = (8.0 + sin( customFrequency * time )) * 16.0 * ( 300.0 / length( mvPosition.xyz ) ) * scalesize;
+    gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+<script type="x-shader/x-vertex" id="vertexshader2">
+  uniform float time;
+  uniform float scalesize;
+  attribute float customFrequency;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+  void main()
+  {
+    vColor = customColor; // set color associated to vertex; use later in fragment shader
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // option (1): draw particles at constant size on screen
+    // gl_PointSize = 100.0;
+      // option (2): scale particles as objects in 3D space
+    gl_PointSize = (8.0 + sin( customFrequency * time )) * 16.0 * ( 300.0 / length( mvPosition.xyz ) ) * scalesize;
+    gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader">
+  uniform sampler2D texture;
+  uniform vec3 starcolor;
+  varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+  void main()
+  {
+    // calculates a color for the particle
+    gl_FragColor = vec4( starcolor, 1.0 );
+    // sets particle texture to desired color
+    gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+  }
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader2">
+  uniform sampler2D texture;
+  uniform vec3 starcolor;
+  varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+  void main()
+  {
+    // calculates a color for the particle
+    gl_FragColor = vec4( starcolor, 1.0 );
+    // sets particle texture to desired color
+    gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+  }
+</script>
+
+
 
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/lodash/dist/lodash.js"></script>
+    <script src="bower_components/threejs/build/three.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="bower_components/nouislider/jquery.nouislider.js"></script>
+        <script src="scripts/sagan/orbitcontrols.js"></script>
+        <script src="scripts/sagan/globals.js"></script>
+        <script src="scripts/sagan/star.js"></script>
+        <script src="scripts/sagan/planet.js"></script>
+        <script src="scripts/sagan/sim.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/services/graphics.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/services/Hubble.js"></script>
         <script src="scripts/services/Kepler.js"></script>
@@ -152,6 +212,7 @@
         <script src="scripts/directives/nouislider.js"></script>
         <script src="scripts/controllers/system.js"></script>
         <script src="scripts/controllers/welcome.js"></script>
+        <script src="scripts/directives/graphics-target.js"></script>
         <!-- endbuild -->
 </body>
 </html>

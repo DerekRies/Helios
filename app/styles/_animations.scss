@@ -1,18 +1,18 @@
 @import "compass/css3/transition";
 
 /* When repeating an element */
-.system.ng-enter {
-    @include transition(opacity 300ms linear);
-}
+// .system.ng-enter {
+//     @include transition(opacity 300ms linear);
+// }
 
-.system.ng-enter,
-.system.ng-leave.ng-leave-active {
-  opacity:0;
-}
-.system.ng-leave,
-.system.ng-enter.ng-enter-active {
-  opacity:1;
-}
+// .system.ng-enter,
+// .system.ng-leave.ng-leave-active {
+//   opacity:0;
+// }
+// .system.ng-leave,
+// .system.ng-enter.ng-enter-active {
+//   opacity:1;
+// }
 
 
 // Fade

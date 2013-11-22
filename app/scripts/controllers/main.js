@@ -2,8 +2,8 @@
 
 angular.module('HeliosApp')
   .controller('MainCtrl',
-           ['$scope', '$log', 'Kepler', 'heliosUtils', '$timeout', '$location',
-   function ($scope,   $log,   Kepler,   utils, $timeout, $location) {
+           ['$scope', '$log', 'Kepler', 'heliosUtils', '$timeout', '$location', 'graphics',
+   function ($scope,   $log,   Kepler,   utils, $timeout, $location, graphics) {
 
     // $scope.menuState = $scope.sidebarState = true;
 
@@ -11,6 +11,17 @@ angular.module('HeliosApp')
     //   {val: 1},
     //   {val: 2}
     // ];
+
+    function getActiveSystemNameIfExists () {
+      var path = $location.path();
+      var pathSystemIndex = path.indexOf('system');
+      if(pathSystemIndex !== -1) {
+        return path.substr(pathSystemIndex + 7);
+      }
+      else {
+        return false;
+      }
+    }
 
     $scope.filteredSystems = [];
     $scope.filters = {
@@ -59,9 +70,40 @@ angular.module('HeliosApp')
       }
     };
 
+
+    Kepler.getSystems()
+      .then(function (data) {
+        $scope.systems = _.map(data, function (val, key) {
+          if(key === 'Kepler-65'){
+            console.log(val, val.stars[0].temperature);
+          }
+          val.name = key;
+          val.styleClassName = utils.mapTemperatureToClassName(val.stars[0].temperature);
+          return val;
+        });
+        $scope.filterSystems();
+      });
+
+    $scope.$on('$routeChangeSuccess', function () {
+      var activeSystemName = getActiveSystemNameIfExists();
+      if(activeSystemName){
+        Kepler.getSystem(activeSystemName)
+          .then(function (data) {
+            $scope.activeSystem = data;
+          });
+      }
+      else{
+        $scope.activeSystem = {
+          'name': 'Select a System'
+        };
+      }
+    });
+
+
     var cleanFilters = _.clone($scope.filters, true);
     $scope.toggleMenu = function () {
       $scope.menuState = !$scope.menuState;
+      graphics.setPause($scope.menuState);
     };
 
     $scope.toggleSidebar = function () {
@@ -72,16 +114,6 @@ angular.module('HeliosApp')
       $location.path('/system/' + system.name);
       $scope.toggleMenu();
     };
-
-    Kepler.getSystems()
-      .success(function (data) {
-        $scope.systems = _.map(data, function (val, key) {
-          val.name = key;
-          val.styleClassName = utils.mapTemperatureToClassName(val.stars[0].temperature);
-          return val;
-        });
-        $scope.filterSystems();
-      });
 
     $scope.clearFilters = function () {
       $scope.filters = _.clone(cleanFilters, true);
