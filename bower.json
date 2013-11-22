@@ -9,7 +9,9 @@
     "jquery": "~1.9.1",
     "bootstrap-sass": "~2.3.1",
     "es5-shim": "~2.0.8",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "nouislider": "~4.3.0",
+    "font-awesome": "4.0.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
