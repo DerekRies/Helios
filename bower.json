@@ -7,7 +7,6 @@
     "angular-animate": "~1.2.0-rc.3",
     "json3": "~3.2.4",
     "jquery": "~1.9.1",
-    "bootstrap-sass": "~2.3.1",
     "es5-shim": "~2.0.8",
     "lodash": "~2.2.1",
     "nouislider": "~4.3.0",
@@ -17,5 +16,8 @@
   "devDependencies": {
     "angular-mocks": "~1.0.7",
     "angular-scenario": "~1.0.7"
+  },
+  "resolutions": {
+    "angular": "~1.2.0-rc.3"
   }
 }
