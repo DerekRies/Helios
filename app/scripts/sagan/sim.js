@@ -37,9 +37,9 @@
     //this._skyMaterial = new THREE.MeshBasicMaterial({color: "red", side: THREE.BackSide});
     var skyFace; //object for face
     var faceMaterialArray= [];
-    // [right,left ,up , down , back ,front]
-    //var picStorage = ["img/RESkyBoxLF.png","img/RESkyBoxDN.png", "img/RESkyBoxBK.png","img/RESkyBoxRT.png","img/RESkyBoxUP.png","img/RESkyBoxFT.png"];
-    var picStorage = ["img/RESkyBoxLF.png","img/RESkyBoxRT.png", "img/RESkyBoxUP.png","img/RESkyBoxDN.png","img/RESkyBoxBK.png","img/RESkyBoxFT.png"];
+    
+    // [right,left ,up , down , front ,back]
+    var picStorage = ["img/RESkyBoxRT.png","img/RESkyBoxLF.png", "img/RESkyBoxUP.png","img/RESkyBoxDN.png","img/RESkyBoxFT.png","img/RESkyBoxBK.png"];
     for(var i=0; i<picStorage.length;i++){
     	skyFace = {
     		map: THREE.ImageUtils.loadTexture(picStorage[i]),
