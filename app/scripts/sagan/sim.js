@@ -34,7 +34,22 @@
 
   Sim.prototype.makeSkybox = function() {
     this._skyGeometry = new THREE.CubeGeometry(49999,49999,49999);
-    this._skyMaterial = new THREE.MeshBasicMaterial({color: 0x0B1317, side: THREE.BackSide});
+    var skyFace; //object for face
+    var faceMaterialArray = [];
+    
+    // [right,left ,up , down , front ,back]
+    var picStorage = ["img/RESkyBoxRT.png","img/RESkyBoxLF.png", "img/RESkyBoxUP.png","img/RESkyBoxDN.png","img/RESkyBoxFT.png","img/RESkyBoxBK.png"];
+    for(var i=0; i<picStorage.length;i++){
+    	skyFace = {
+    		map: THREE.ImageUtils.loadTexture(picStorage[i]),
+    		side: THREE.BackSide //using BackSide so we can view the whole cube from the inside
+    	};
+    	faceMaterialArray.push( new THREE.MeshBasicMaterial(skyFace));
+
+    }
+
+    this._skyMaterial = new THREE.MeshFaceMaterial(faceMaterialArray);
+
     this._skyBox = new THREE.Mesh(this._skyGeometry, this._skyMaterial);
     this.scene.add(this._skyBox);
   };

@@ -20,3 +20,10 @@ You will need to set up the development environment first and foremost. This gui
  - Yeoman, Grunt, Bower
  - Google App Engine Python SDK
  - VirtualEnv (VirtualEnvWrapper preferred) Pip
+
+ To run Helios:
+ Open Terminal > cd into Helios > enter command "grunt server"
+ If you're using a VM and it is not capable of running Helios,
+ try running it to your host machine over NAT. If you primarily use
+ an ethernet connection and you are not able to port to your host
+ computer, switch the VM connection type to Bridged Adapter.
