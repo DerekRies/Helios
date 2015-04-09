@@ -34,9 +34,8 @@
 
   Sim.prototype.makeSkybox = function() {
     this._skyGeometry = new THREE.CubeGeometry(49999,49999,49999);
-    //this._skyMaterial = new THREE.MeshBasicMaterial({color: "red", side: THREE.BackSide});
     var skyFace; //object for face
-    var faceMaterialArray= [];
+    var faceMaterialArray = [];
     
     // [right,left ,up , down , front ,back]
     var picStorage = ["img/RESkyBoxRT.png","img/RESkyBoxLF.png", "img/RESkyBoxUP.png","img/RESkyBoxDN.png","img/RESkyBoxFT.png","img/RESkyBoxBK.png"];
