@@ -374,17 +374,21 @@
                 width: 183px;
                 height: 183px;
                 margin: 0 auto;
+                position: relative;
             }
             .planet-count{
                 width: 30px;
                 height: 30px;
-                color: black;
+                color: #B4E0E4;
                 text-align: center;
                 border-radius: 50%;
                 line-height: 30px;
                 background: #222;
                 text-shadow: 1px 1px 1px #333;
                 border: 2px solid #2c4f63;
+                position: absolute;
+                top: 120px;
+                left: 25px;
             }
 
             .white-star { background: url('../img/stars.png') no-repeat  -19px   -11px;  }
