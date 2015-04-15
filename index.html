@@ -1,0 +1,216 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helios</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- <link rel="stylesheet" href="bower_components/nouislider/jquery.nouislider.css"> -->
+        <!-- endbuild -->
+</head>
+  <body ng-app="HeliosApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div id="stage">
+      <div ng-view></div>
+    </div>
+
+    <div class="bottom-panel-area" ng-controller="MainCtrl">
+      <!-- Nav Bar -->
+      <div id="block" class="ease-in-out" ng-class="{'main-block-open': menuState}">
+
+          <header id="controls">
+              <div class="location block">
+                  <p ng-hide="menuState"><strong>{{activeSystem.name}} /</strong> {{activeSystem.num_planets}} PLANETS</p>
+                  <a class="filter-toggle-button" ng-show="menuState" ng-click="toggleSidebar()">
+                    <span class="fade" ng-hide="sidebarState"><i class="fa fa-list"></i> FILTER SYSTEMS</span>
+                    <span class="fade" ng-show="sidebarState"><i class="fa fa-times close"></i></span>
+                  </a>
+              </div>
+              <nav class="actions">
+                  <button ng-class="{'menu-exit active': menuState}" class="menu button" ng-click="toggleMenu()">X</button>
+              </nav>
+              <div class="data block">
+                  <small ng-hide="menuState">mass: 1.18sol</small>
+                  <input ng-show="menuState" class="menu-search" type="text" placeholder="Search for systems..." ng-model="query" debounce-model-update="300ms">
+              </div>
+          </header>
+          <!-- Systems Block -->
+          <section id="bottom" class="delay fade" ng-show="menuState">
+              <div class="system" ng-repeat="system in filteredSystems | orderBy: 'num_planets': true | filter:query | limitTo: 50">
+                  <div class="render {{system.styleClassName}}" ng-click="goToSystem(system)">
+                      <div class="planet-count">
+                          {{ system.num_planets }}
+                      </div>
+                  </div>
+                  <span>{{ system.name }} | {{system.styleClassName}}</span>
+              </div>
+              <!-- Filters Sidebar -->
+              <div class="filters-sidebar ease-in-out" ng-class="{'filters-sidebar-open': sidebarState}">
+                  <!-- Sidebar Header -->
+                  <div class="cf">
+                      <div class="top-gear-block">
+                          <i class="fa fa-gears"></i>
+                      </div>
+                      <div class="top-title-block">
+                          <h2>FILTER<br />SYSTEMS</h2>
+                      </div>
+                  </div>
+                  <!-- Filters Container -->
+                  <div class="fliter-options cf">
+                      <!-- Filter Item -->
+                      <div class="item">
+                          <div class="item-type"><i class="fa fa-rocket"></i>DISTANCE</div>
+                          <div class="option cf">
+                              <div class="range-slider" noUiSlider start-min="filters.distance.minVal" start-max="filters.distance.maxVal" range-min="0" range-max="filters.distance.cap"></div>
+                              <span class="left">{{ filters.distance.minVal }} - {{ filters.distance.maxVal }} <em>pc</em></span>
+                          </div>
+                      </div>
+
+                      <div class="item">
+                          <div class="item-type"><i class="fa fa-male"></i>SIZE</div>
+                          <div class="option cf">
+                              <div class="range-slider" noUiSlider start-min="filters.radius.minVal" start-max="filters.radius.maxVal" range-min="0" range-max="filters.radius.cap"></div>
+                              <span class="left">{{ filters.radius.minVal }} - {{ filters.radius.maxVal }} <em></em></span>
+                          </div>
+                      </div>
+
+                      <!-- <div class="item">
+                          <div class="item-type"><i class="fa fa-fire"></i>TEMPERATURE</div>
+                          <div class="option cf">
+                              <span class="left">COLD</span>
+                              <input type="range" min="{{ filters.num_planets.minVal }}" max="{{ filters.num_planets.maxVal }}" ng-model="filters.distance.maxVal" debounce-model-update="700ms">
+                          </div>
+                      </div> -->
+
+                      <div class="item">
+                          <div class="item-type"><i class="fa fa-globe"></i>NUMBER OF PLANETS</div>
+                          <div class="option cf">
+                              <div class="range-slider" noUiSlider start-min="filters.num_planets.minVal" start-max="filters.num_planets.maxVal" range-min="0" range-max="filters.num_planets.cap"></div>
+                              <span class="left">{{ filters.num_planets.minVal }} - {{ filters.num_planets.maxVal }}</span>
+                          </div>
+                      </div>
+
+                      <!-- <div class="item">
+                          <div class="item-type"><i class="fa fa-sun-o"></i>NUMBER OF STARS</div>
+                          <div class="option cf">
+                              <select ng-model="filters.num_stars.val" ng-options="stars.val for stars in numStars">
+                                  <option value=""></option>
+                              </select>
+                          </div>
+                      </div> -->
+
+                      <button class="clear-filter-options" ng-click="clearFilters()"><i class="fa fa-refresh"></i>CLEAR FILTERS</button>
+                  </div>
+              </div>
+          </div>
+      </div><!-- END: Nav Bar -->
+    </div>
+
+
+<script type="x-shader/x-vertex" id="vertexshader">
+  uniform float time;
+  uniform float scalesize;
+  attribute float customFrequency;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+  void main()
+  {
+    vColor = customColor; // set color associated to vertex; use later in fragment shader
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // option (1): draw particles at constant size on screen
+    // gl_PointSize = 100.0;
+      // option (2): scale particles as objects in 3D space
+    gl_PointSize = (8.0 + sin( customFrequency * time )) * 16.0 * ( 300.0 / length( mvPosition.xyz ) ) * scalesize;
+    gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+<script type="x-shader/x-vertex" id="vertexshader2">
+  uniform float time;
+  uniform float scalesize;
+  attribute float customFrequency;
+  attribute vec3 customColor;
+  varying vec3 vColor;
+  void main()
+  {
+    vColor = customColor; // set color associated to vertex; use later in fragment shader
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+    // option (1): draw particles at constant size on screen
+    // gl_PointSize = 100.0;
+      // option (2): scale particles as objects in 3D space
+    gl_PointSize = (8.0 + sin( customFrequency * time )) * 16.0 * ( 300.0 / length( mvPosition.xyz ) ) * scalesize;
+    gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader">
+  uniform sampler2D texture;
+  uniform vec3 starcolor;
+  varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+  void main()
+  {
+    // calculates a color for the particle
+    gl_FragColor = vec4( starcolor, 1.0 );
+    // sets particle texture to desired color
+    gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+  }
+</script>
+<script type="x-shader/x-fragment" id="fragmentshader2">
+  uniform sampler2D texture;
+  uniform vec3 starcolor;
+  varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+  void main()
+  {
+    // calculates a color for the particle
+    gl_FragColor = vec4( starcolor, 1.0 );
+    // sets particle texture to desired color
+    gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+  }
+</script>
+
+
+
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/lodash/dist/lodash.js"></script>
+    <script src="bower_components/threejs/build/three.js"></script>
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="bower_components/nouislider/jquery.nouislider.js"></script>
+        <script src="scripts/sagan/orbitcontrols.js"></script>
+        <script src="scripts/sagan/globals.js"></script>
+        <script src="scripts/sagan/star.js"></script>
+        <script src="scripts/sagan/planet.js"></script>
+        <script src="scripts/sagan/sim.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/graphics.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/services/Kepler.js"></script>
+        <script src="scripts/directives/debounceModelUpdate.js"></script>
+        <script src="scripts/services/heliosUtils.js"></script>
+        <script src="scripts/directives/nouislider.js"></script>
+        <script src="scripts/controllers/system.js"></script>
+        <script src="scripts/controllers/welcome.js"></script>
+        <script src="scripts/directives/graphics-target.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
