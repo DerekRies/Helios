@@ -62,10 +62,10 @@ var TEXTURES = {};
 // TEXTURES.FADEOFF = THREE.ImageUtils.loadTexture('../../img/fadeoff.png');
 // TEXTURES.GLOW_PARTICLE = THREE.ImageUtils.loadTexture('../../img/glow.png');
 // TEXTURES.NEBULA_PARTICLE = THREE.ImageUtils.loadTexture('../../img/nebula2.png');
-TEXTURES.CORONA = THREE.ImageUtils.loadTexture('/img/corona.png');
-TEXTURES.FADEOFF = THREE.ImageUtils.loadTexture('/img/fadeoff.png');
-TEXTURES.GLOW_PARTICLE = THREE.ImageUtils.loadTexture('/img/glow.png');
-TEXTURES.NEBULA_PARTICLE = THREE.ImageUtils.loadTexture('/img/nebula2.png');
+TEXTURES.CORONA = THREE.ImageUtils.loadTexture('img/corona.png');
+TEXTURES.FADEOFF = THREE.ImageUtils.loadTexture('img/fadeoff.png');
+TEXTURES.GLOW_PARTICLE = THREE.ImageUtils.loadTexture('img/glow.png');
+TEXTURES.NEBULA_PARTICLE = THREE.ImageUtils.loadTexture('img/nebula2.png');
 
 window.UNITS = UNITS;
 window.TEXTURES = TEXTURES;

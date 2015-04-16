@@ -5,7 +5,7 @@ angular.module('HeliosApp')
 
     var systems;
 
-    $http.get('/scripts/total.json').success(function (data) {
+    $http.get('scripts/total.json').success(function (data) {
       systems = data;
     });
 
